@@ -24,6 +24,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.alberto.tfg.tormantos.R;
+import com.alberto.tfg.tormantos.service.CaptureService;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -76,6 +77,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
         setupElements();
 
         this.checkForAppPermissions();
@@ -89,13 +91,8 @@ public class MainActivity extends AppCompatActivity
     private void checkForAppPermissions() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.BIND_ACCESSIBILITY_SERVICE)
                 != PackageManager.PERMISSION_GRANTED) {
-            // Permission is not granted
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.BIND_ACCESSIBILITY_SERVICE},
-                    1);
 
-            System.out.println("una mierda te comes");
-            startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));
+            startActivityForResult(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS), 1);
 
         }else{
             System.out.println("esto dice que guay");
