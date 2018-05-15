@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
+<accessibility-service
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:accessibilityEventTypes="typeAllMask"
-    android:packageNames="com.example.android.apis"
-    android:accessibilityFeedbackType="feedbackSpoken"
-    android:notificationTimeout="100"
+    android:accessibilityFeedbackType="feedbackAllMask"
+    android:accessibilityFlags="flagDefault"
+    android:canRequestEnhancedWebAccessibility="true"
     android:canRetrieveWindowContent="true"
+    android:notificationTimeout="100"
     android:name="@string/service_name"
     android:description="@string/service_description"/>

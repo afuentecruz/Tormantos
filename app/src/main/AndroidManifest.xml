@@ -23,8 +23,8 @@
         </activity>
 
         <service
-            android:name=".service.CaptureService"
-            android:banner="@string/service_description"
+            android:name=".service.AccessibilityServiceImpl"
+            android:label="@string/service_description"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />
