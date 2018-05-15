@@ -3,6 +3,10 @@ package com.alberto.tfg.tormantos.utils;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 
+import com.alberto.tfg.tormantos.sto.EventSto;
+
+import java.text.SimpleDateFormat;
+
 /**
  * Helper class to handle the main data
  * of the Accessility Events
@@ -19,13 +23,15 @@ public class EventDataHelper {
         return sb.toString();
     }
 
-    public static void log(AccessibilityEvent event){
+    public static void log(EventSto event){
 
-        if(!getEventText(event).equals("")){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY HH:mm:ss");
+
+        if(!getEventText(event.getEvent()).equals("")){
             Log.d(TAG, String.format(
                     "[type] %s [eventId] %s [class] %s [package] %s [time] %s [text] %s",
-                    getEventType(event), event.getEventType(), event.getClassName(), event.getPackageName(),
-                    event.getEventTime(), getEventText(event))
+                    getEventType(event.getEvent()), event.getEvent().getEventType(), event.getEvent().getClassName(), event.getPackageName(),
+                    sdf.format(event.getCaptureInstant()).toString(), getEventText(event.getEvent()))
             );
         }
 

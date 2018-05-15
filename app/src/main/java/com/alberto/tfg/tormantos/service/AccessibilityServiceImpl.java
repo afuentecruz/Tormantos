@@ -1,21 +1,12 @@
 package com.alberto.tfg.tormantos.service;
 
-import android.accessibilityservice.AccessibilityService;
-import android.accessibilityservice.AccessibilityServiceInfo;
-import android.content.Intent;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
-import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Toast;
 
-import com.alberto.tfg.tormantos.utils.EventDataHelper;
+import com.alberto.tfg.tormantos.handler.EventHandler;
 
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Accessibility Service implementation to capture all the accessibility events
@@ -25,28 +16,22 @@ public class AccessibilityServiceImpl extends android.accessibilityservice.Acces
 
     private static String TAG = "AccessibilityServiceImpl";
 
+    private EventHandler eventHandler;
+
     @Override
     public void onAccessibilityEvent(final AccessibilityEvent event) {
-
         if(event.getText().isEmpty())
             return;
 
-        AccessibilityNodeInfo source = event.getSource();
-
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        SimpleDateFormat dt = new SimpleDateFormat("yyyyy-mm-dd hh:mm:ss");
-
-        System.out.println("now: " + timestamp);
-        System.out.println(event.getEventTime());
-
-        EventDataHelper.log(event);
-       // Log.d("Source", source.toString() + "");
+        eventHandler.handleEvent(event, new Date());
     }
 
     @Override
     public void onCreate(){
         super.onCreate();
         Log.d(TAG, "onCreate");
+
+        this.eventHandler = new EventHandler();
     }
 
 
@@ -60,7 +45,7 @@ public class AccessibilityServiceImpl extends android.accessibilityservice.Acces
     public void onServiceConnected() {
         super.onServiceConnected();
 
-        Toast toast = Toast.makeText(getApplicationContext(), "Service connected", Toast.LENGTH_LONG);
+        Toast toast = Toast.makeText(getApplicationContext(), "Tormantos is watching you!", Toast.LENGTH_LONG);
         toast.show();
     }
 
