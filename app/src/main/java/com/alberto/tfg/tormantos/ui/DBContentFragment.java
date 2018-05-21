@@ -9,10 +9,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.alberto.tfg.tormantos.R;
+import com.alberto.tfg.tormantos.dto.comunication.GmailDto;
 import com.alberto.tfg.tormantos.dto.messaging.WhatsappDto;
+import com.alberto.tfg.tormantos.manager.communication.GmailManager;
 import com.alberto.tfg.tormantos.manager.messaging.WhatsappManager;
-
-import java.util.List;
+import com.alberto.tfg.tormantos.utils.Strings;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,13 +23,19 @@ import butterknife.ButterKnife;
  */
 public class DBContentFragment extends Fragment {
 
-    public static final String TAG ="DBContentFragment";
+    public static final String TAG = "DBContentFragment";
+
+    private String contentDescription;
 
     @BindView(R.id.DBListView)
     ListView dbListView;
 
-    public DBContentFragment(){
+    public DBContentFragment() {
         // Required empty constructor
+    }
+
+    public void setContentDescription(String contentDescription) {
+        this.contentDescription = contentDescription;
     }
 
     @Override
@@ -43,14 +50,20 @@ public class DBContentFragment extends Fragment {
         return view;
     }
 
-    private void loadDBContent(View view){
-        List<WhatsappDto> whatsappDBList = WhatsappManager.getAllWhatsappModels();
+    private void loadDBContent(View view) {
 
-        dbListView.setAdapter(new ArrayAdapter<WhatsappDto>(this.getActivity(), android.R.layout.simple_list_item_1, whatsappDBList));
+        switch (this.contentDescription) {
+            case Strings.PACKAGE_WHATSAPP:
+                dbListView.setAdapter(new ArrayAdapter<WhatsappDto>(this.getActivity(), android.R.layout.simple_list_item_1, WhatsappManager.getAllWhatsappModels()));
+                break;
+            case Strings.PACKAGE_GMAIL:
+                dbListView.setAdapter(new ArrayAdapter<GmailDto>(this.getActivity(), android.R.layout.simple_list_item_1, GmailManager.getAllGmailModels()));
+                break;
+            default:
+                break;
+        }
+
     }
 
 
-
-
-
-    }
+}

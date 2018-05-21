@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.alberto.tfg.tormantos.R;
+import com.alberto.tfg.tormantos.utils.Strings;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -121,16 +122,18 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+        DBContentFragment dbContentFragment = new DBContentFragment();
         int id = item.getItemId();
-
         if (id == R.id.whatsapp) {
             // Show the WhatsApp stored content
+            dbContentFragment.setContentDescription(Strings.PACKAGE_WHATSAPP);
             android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.main_content, new DBContentFragment(), DBContentFragment.TAG).commit();
-
-
-        } else if (id == R.id.nav_gallery) {
-
+            fragmentTransaction.replace(R.id.main_content, dbContentFragment, DBContentFragment.TAG).commit();
+        } else if (id == R.id.gmail) {
+            // Show the GMail stored content
+            dbContentFragment.setContentDescription(Strings.PACKAGE_GMAIL);
+            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.main_content, dbContentFragment, DBContentFragment.TAG).commit();
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {

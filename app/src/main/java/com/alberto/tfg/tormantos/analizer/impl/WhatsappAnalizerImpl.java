@@ -25,11 +25,9 @@ public class WhatsappAnalizerImpl implements Analizer {
 
     private WhatsappDto whatsappDto;
 
-    private WhatsappManager whatsappManager;
 
     public WhatsappAnalizerImpl() {
         Log.d(TAG, "Constructor del whatsappAnalizer");
-        whatsappManager = new WhatsappManager();
         whatsappDto = null;
     }
 
@@ -41,38 +39,28 @@ public class WhatsappAnalizerImpl implements Analizer {
         }
 
         switch (eventSto.getClassName()) {
-
             case Strings.CLASS_HOMEACTIVITY: // Navigated to WhatsApp home
                 Log.d(TAG, "Home");
                 storeObjectInRealm(eventSto.getCaptureInstant());
                 // Create a new whatsappDto object
                 this.whatsappDto = new WhatsappDto(eventSto.getCaptureInstant());
                 this.currentMessage = "";
+
                 break;
-
             case Strings.WIDGET_RELATIVE_LAYOUT: //Clicked on a conversation
-
                 // Extract the contact name string
                 currentInterlocutor = this.getContactName(Helper.getEventText(eventSto.getEvent()));
                 whatsappDto.setInterlocutor(currentInterlocutor);
 
-                Log.d(TAG, "Clicked whatsapp conversation: " + currentInterlocutor);
                 break;
-
-
             case Strings.WIDGET_EDITTEXT: // Writing
-                Log.d(TAG, "Escribiendo en whatsapp");
-
-                // Get the writted line in the conversation
                 this.currentMessage = Helper.getEventText(eventSto.getEvent());
-                break;
 
+                break;
             default:
                 break;
-
         }
     }
-
 
     /**
      * getContactName, method that extracts the name of the person or group that the user is writing on
@@ -82,7 +70,6 @@ public class WhatsappAnalizerImpl implements Analizer {
      */
     private String getContactName(String eventText) {
 
-
         String contactName = "";
         for (int i = 0; i < eventText.length(); i++) {
             if (eventText.charAt(0) == eventText.charAt(i)) {
@@ -91,7 +78,6 @@ public class WhatsappAnalizerImpl implements Analizer {
         }
         return contactName;
     }
-
 
     /**
      * Method called by the eventHandler when the keyboard triggers the send text event
@@ -106,21 +92,18 @@ public class WhatsappAnalizerImpl implements Analizer {
 
         TimestampString ts = new TimestampString(this.currentMessage, sendTimestamp);
         this.whatsappDto.getTextList().add(ts);
-        Log.d(TAG, "Confirmada linea: " + ts);
     }
 
 
     public void storeObjectInRealm(Date timestamp) {
 
         if (this.whatsappDto != null && this.whatsappDto.getInterlocutor() != null) {
-            if(this.whatsappDto.getInterlocutor().equals("")){
+            if (this.whatsappDto.getInterlocutor().equals("")) {
                 this.whatsappDto.setInterlocutor("Whatsapp Home");
             }
-            //  if(this.whatsappDB.getLastTextRegistry().length() != 0){ // There is some data to store
+
             this.whatsappDto.setEndTimestamp(timestamp);
             WhatsappManager.saveOrUpdateWhatsappDB(this.whatsappDto);
-            //}
-
         }
     }
 }

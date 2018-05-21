@@ -3,6 +3,7 @@ package com.alberto.tfg.tormantos.handler;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 
+import com.alberto.tfg.tormantos.analizer.impl.GmailAnalizerImpl;
 import com.alberto.tfg.tormantos.analizer.impl.WhatsappAnalizerImpl;
 import com.alberto.tfg.tormantos.sto.EventSto;
 import com.alberto.tfg.tormantos.utils.Helper;
@@ -27,9 +28,12 @@ public class EventHandler {
 
     private WhatsappAnalizerImpl whatsappAnalizer;
 
+    private GmailAnalizerImpl gmailAnalizer;
+
     public EventHandler() {
         Log.d(TAG, "constructor!");
         whatsappAnalizer = new WhatsappAnalizerImpl();
+        gmailAnalizer = new GmailAnalizerImpl();
         currentPackage = "";
     }
 
@@ -39,22 +43,20 @@ public class EventHandler {
                 event.getPackageName().toString(),
                 event.getClassName().toString());
 
-        Helper.log(eventSto);
-
         checkRemainingData(eventSto);
 
         // -- Stores the current listening app package name if it isn't the keyboard
         if (!eventSto.getPackageName().equals(Strings.PACKAGE_KEYBOARD))
             currentPackage = eventSto.getPackageName();
+        Helper.log(eventSto);
 
         switch (eventSto.getPackageName()) {
             case Strings.PACKAGE_WHATSAPP:
                 whatsappAnalizer.compute(eventSto);
-
                 break;
             case Strings.PACKAGE_GMAIL:
+                gmailAnalizer.compute(eventSto);
                 break;
-
             case Strings.PACKAGE_KEYBOARD: // Keyboard displayed event
                 handleKeyboardEvent(eventSto);
                 break;
@@ -62,7 +64,7 @@ public class EventHandler {
                 handleShortchut(eventSto);
                 break;
             default:
-                Log.d(TAG, "default");
+             //   Helper.log(eventSto);
                 break;
         }
     }
@@ -105,6 +107,7 @@ public class EventHandler {
     /**
      * Checks if the app changed suddenly (for example, navigated to home from any other activity)
      * and try to store any previous content of the corresponding analizer.
+     *
      * @param eventSto the EventSto.
      */
     private void checkRemainingData(EventSto eventSto) {

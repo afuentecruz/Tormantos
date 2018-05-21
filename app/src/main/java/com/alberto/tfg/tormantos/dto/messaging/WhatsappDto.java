@@ -12,9 +12,9 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 /**
- * Whatsapp Dto object, used to persist in realm as soon as it extends from RealmObject.
+ * Whatsapp Dto object, used to store the whatsapp interaction data and persist it in realm as soon as it extends from RealmObject.
  */
-public class WhatsappDto extends RealmObject{
+public class WhatsappDto extends RealmObject {
 
     @PrimaryKey
     private String id;
@@ -29,13 +29,13 @@ public class WhatsappDto extends RealmObject{
     // Describes the end time when the user abandoned a conversation
     private Date endTimestamp;
 
-    public WhatsappDto(){
+    public WhatsappDto() {
 
         this.id = UUID.randomUUID().toString(); //Randomized id.
         this.textList = new RealmList<>();
     }
 
-    public WhatsappDto(Date startTimestamp){
+    public WhatsappDto(Date startTimestamp) {
         this.id = UUID.randomUUID().toString(); //Randomized id.
         this.startTimestamp = startTimestamp;
         textList = new RealmList<>();
@@ -45,8 +45,8 @@ public class WhatsappDto extends RealmObject{
         this.id = id;
         this.interlocutor = interlocutor;
         this.textList = textList;
-        this.startTimestamp= startTimestamp;
-        this.endTimestamp= endTimestamp;
+        this.startTimestamp = startTimestamp;
+        this.endTimestamp = endTimestamp;
     }
 
     public String getInterlocutor() {

@@ -9,7 +9,7 @@ import java.util.List;
 import io.realm.Realm;
 
 /**
- * Whatsapp model database manager
+ * Whatsapp dto database manager
  */
 public class WhatsappManager {
 

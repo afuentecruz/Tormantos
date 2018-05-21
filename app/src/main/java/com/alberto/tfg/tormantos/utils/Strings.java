@@ -17,9 +17,12 @@ public class Strings {
     public static final String KEY_KEYBOARD_SHOW_MSG = "Mostrando teclado español (España) (QWERTY (Ñ))";
     public static final String KEY_KEYBOARD_WRITTE_MSG = "Escribir mensaje";
     public static final String KEY_WHATSAPP = "WhatsApp";
+    public static final String KEY_GMAIL_SENDED = "Enviando mensaje…";
 
     /** WHATSAPP UI COMPONENTS */
     public static final String CLASS_HOMEACTIVITY = "com.whatsapp.HomeActivity";
+
+
 
     /** ANDROID UI WIDGETS */
     public static final String WIDGET_RELATIVE_LAYOUT = "android.widget.RelativeLayout";
