@@ -6,14 +6,22 @@ import android.view.accessibility.AccessibilityEvent;
 import com.alberto.tfg.tormantos.sto.EventSto;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Helper class to handle the main data
  * of the Accessility Events
  */
-public class EventDataHelper {
+public class Helper {
 
     private static final String TAG = "Helper";
+
+    private static final String KEY_DATE_PATTERN = "dd/MM/YYYY HH:mm:ss";
+
+    public static String formatDate(Date date){
+        SimpleDateFormat sdf = new SimpleDateFormat(KEY_DATE_PATTERN);
+        return sdf.format(date).toString();
+    }
 
     public static String getEventText(AccessibilityEvent event) {
         StringBuilder sb = new StringBuilder();
@@ -25,7 +33,7 @@ public class EventDataHelper {
 
     public static void log(EventSto event){
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat(KEY_DATE_PATTERN);
 
         if(!getEventText(event.getEvent()).equals("")){
             Log.d(TAG, String.format(

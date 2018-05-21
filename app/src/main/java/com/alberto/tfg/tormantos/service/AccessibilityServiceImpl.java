@@ -20,26 +20,23 @@ public class AccessibilityServiceImpl extends android.accessibilityservice.Acces
 
     @Override
     public void onAccessibilityEvent(final AccessibilityEvent event) {
-        if(event.getText().isEmpty())
+        if (event.getText().isEmpty())
             return;
 
         eventHandler.handleEvent(event, new Date());
     }
 
     @Override
-    public void onCreate(){
+    public void onCreate() {
         super.onCreate();
         Log.d(TAG, "onCreate");
 
         this.eventHandler = new EventHandler();
     }
 
-
-
     @Override
     public void onInterrupt() {
     }
-
 
     @Override
     public void onServiceConnected() {
@@ -48,5 +45,4 @@ public class AccessibilityServiceImpl extends android.accessibilityservice.Acces
         Toast toast = Toast.makeText(getApplicationContext(), "Tormantos is watching you!", Toast.LENGTH_LONG);
         toast.show();
     }
-
 }

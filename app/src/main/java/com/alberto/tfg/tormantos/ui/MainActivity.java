@@ -6,26 +6,21 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.alberto.tfg.tormantos.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Main Activity controller.
@@ -45,12 +40,11 @@ public class MainActivity extends AppCompatActivity
 
     @BindView(R.id.nav_view)
     NavigationView navigationView;
+//
+//    @BindView(R.id.mainButton)
+//    FloatingActionButton mainFloatingButton;
 
-    @BindView(R.id.mainButton)
-    FloatingActionButton mainFloatingButton;
 
-    @BindView(R.id.mainTextView)
-    TextView mainTextView;
 
 
     /**
@@ -74,15 +68,8 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
         setupElements();
-
         this.checkForAppPermissions();
-/*        Intent intent = new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS);
-        startActivityForResult(intent, 0);
-*/
-
-
     }
 
     private void checkForAppPermissions() {
@@ -136,8 +123,12 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
+        if (id == R.id.whatsapp) {
+            // Show the WhatsApp stored content
+            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.main_content, new DBContentFragment(), DBContentFragment.TAG).commit();
+
+
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
@@ -158,11 +149,11 @@ public class MainActivity extends AppCompatActivity
     /**
      * Widgets events
      */
-
-    @OnClick(R.id.mainButton)
-    public void doThing(View view) {
-        startActivityForResult(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS), 1);
-    }
+//
+//    @OnClick(R.id.mainButton)
+//    public void doThing(View view) {
+//        startActivityForResult(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS), 1);
+//    }
 
     /**
      * Checks if the accessibility service 'MonitorService' is enabled in the
