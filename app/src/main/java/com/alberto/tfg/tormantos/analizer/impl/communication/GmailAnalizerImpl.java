@@ -1,4 +1,4 @@
-package com.alberto.tfg.tormantos.analizer.impl;
+package com.alberto.tfg.tormantos.analizer.impl.communication;
 
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;

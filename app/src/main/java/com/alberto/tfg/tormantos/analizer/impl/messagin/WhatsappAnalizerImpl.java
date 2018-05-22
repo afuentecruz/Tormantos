@@ -1,4 +1,4 @@
-package com.alberto.tfg.tormantos.analizer.impl;
+package com.alberto.tfg.tormantos.analizer.impl.messagin;
 
 import android.util.Log;
 
@@ -63,7 +63,7 @@ public class WhatsappAnalizerImpl implements Analizer {
     }
 
     /**
-     * getContactName, method that extracts the name of the person or group that the user is writing on
+     * getContactName, method that extracts the name of the person or group the user is writing on
      *
      * @param eventText, accessibilityEvent text.
      * @return String contactName, the extracted name
@@ -103,6 +103,7 @@ public class WhatsappAnalizerImpl implements Analizer {
             }
 
             this.whatsappDto.setEndTimestamp(timestamp);
+            Log.d(TAG, "save: " + whatsappDto.toString());
             WhatsappManager.saveOrUpdateWhatsappDB(this.whatsappDto);
         }
     }
