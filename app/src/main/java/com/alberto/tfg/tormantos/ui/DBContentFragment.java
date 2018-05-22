@@ -10,8 +10,10 @@ import android.widget.ListView;
 
 import com.alberto.tfg.tormantos.R;
 import com.alberto.tfg.tormantos.dto.comunication.GmailDto;
+import com.alberto.tfg.tormantos.dto.comunication.SmsDto;
 import com.alberto.tfg.tormantos.dto.messaging.WhatsappDto;
 import com.alberto.tfg.tormantos.manager.communication.GmailManager;
+import com.alberto.tfg.tormantos.manager.communication.SmsManager;
 import com.alberto.tfg.tormantos.manager.messaging.WhatsappManager;
 import com.alberto.tfg.tormantos.utils.Strings;
 
@@ -52,15 +54,19 @@ public class DBContentFragment extends Fragment {
 
     private void loadDBContent(View view) {
 
-        switch (this.contentDescription) {
-            case Strings.PACKAGE_WHATSAPP:
-                dbListView.setAdapter(new ArrayAdapter<WhatsappDto>(this.getActivity(), android.R.layout.simple_list_item_1, WhatsappManager.getAllWhatsappModels()));
-                break;
-            case Strings.PACKAGE_GMAIL:
-                dbListView.setAdapter(new ArrayAdapter<GmailDto>(this.getActivity(), android.R.layout.simple_list_item_1, GmailManager.getAllGmailModels()));
-                break;
-            default:
-                break;
+        if (this.contentDescription != null) {
+            switch (this.contentDescription) {
+                case Strings.PACKAGE_WHATSAPP:
+                    dbListView.setAdapter(new ArrayAdapter<WhatsappDto>(this.getActivity(), android.R.layout.simple_list_item_1, WhatsappManager.getAllWhatsappModels()));
+                    break;
+                case Strings.PACKAGE_GMAIL:
+                    dbListView.setAdapter(new ArrayAdapter<GmailDto>(this.getActivity(), android.R.layout.simple_list_item_1, GmailManager.getAllGmailModels()));
+                    break;
+                case Strings.PACKAGE_SMS:
+                    dbListView.setAdapter(new ArrayAdapter<SmsDto>(this.getActivity(), android.R.layout.simple_list_item_1, SmsManager.getAllSmsModels()));
+                default:
+                    break;
+            }
         }
 
     }

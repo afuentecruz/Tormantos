@@ -3,8 +3,9 @@ package com.alberto.tfg.tormantos.handler;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 
-import com.alberto.tfg.tormantos.analizer.impl.GmailAnalizerImpl;
-import com.alberto.tfg.tormantos.analizer.impl.WhatsappAnalizerImpl;
+import com.alberto.tfg.tormantos.analizer.impl.communication.GmailAnalizerImpl;
+import com.alberto.tfg.tormantos.analizer.impl.communication.SmsAnalizerImpl;
+import com.alberto.tfg.tormantos.analizer.impl.messaging.WhatsappAnalizerImpl;
 import com.alberto.tfg.tormantos.sto.EventSto;
 import com.alberto.tfg.tormantos.utils.Helper;
 import com.alberto.tfg.tormantos.utils.Strings;
@@ -22,18 +23,25 @@ public class EventHandler {
 
     private static final String TAG = "EventHandler";
 
+    /** Date formatter */
     private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY HH:mm:ss");
 
+    /** String that stores the current packages the app is processing in a certai instant */
     private String currentPackage;
 
+    /** General communication analizers */
+    private GmailAnalizerImpl gmailAnalizer;
+    private SmsAnalizerImpl smsAnalizer;
+
+    /** Instant messaging analizers */
     private WhatsappAnalizerImpl whatsappAnalizer;
 
-    private GmailAnalizerImpl gmailAnalizer;
 
     public EventHandler() {
         Log.d(TAG, "constructor!");
         whatsappAnalizer = new WhatsappAnalizerImpl();
         gmailAnalizer = new GmailAnalizerImpl();
+        smsAnalizer = new SmsAnalizerImpl();
         currentPackage = "";
     }
 
@@ -51,12 +59,22 @@ public class EventHandler {
         Helper.log(eventSto);
 
         switch (eventSto.getPackageName()) {
-            case Strings.PACKAGE_WHATSAPP:
-                whatsappAnalizer.compute(eventSto);
-                break;
+
+            // Communication cases
             case Strings.PACKAGE_GMAIL:
                 gmailAnalizer.compute(eventSto);
                 break;
+            case Strings.PACKAGE_SMS:
+                smsAnalizer.compute(eventSto);
+                break;
+
+            // Instant messaging cases
+            case Strings.PACKAGE_WHATSAPP:
+                whatsappAnalizer.compute(eventSto);
+                break;
+
+
+            // Generals cases
             case Strings.PACKAGE_KEYBOARD: // Keyboard displayed event
                 handleKeyboardEvent(eventSto);
                 break;

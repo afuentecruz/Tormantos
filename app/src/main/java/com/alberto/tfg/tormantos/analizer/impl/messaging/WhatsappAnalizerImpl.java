@@ -1,4 +1,4 @@
-package com.alberto.tfg.tormantos.analizer.impl.messagin;
+package com.alberto.tfg.tormantos.analizer.impl.messaging;
 
 import android.util.Log;
 
@@ -19,10 +19,11 @@ public class WhatsappAnalizerImpl implements Analizer {
 
     private static final String TAG = "WhatsappAnalizer";
 
+    /** The message that the user is writting */
     private String currentMessage;
-
+    /** Contact name of the person who the user is writting */
     private String currentInterlocutor;
-
+    /** WhatsappDto object that stores all the information */
     private WhatsappDto whatsappDto;
 
 

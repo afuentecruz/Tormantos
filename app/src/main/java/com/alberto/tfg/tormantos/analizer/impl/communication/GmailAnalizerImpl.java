@@ -13,12 +13,13 @@ import com.alberto.tfg.tormantos.utils.Strings;
 import io.realm.RealmList;
 
 /**
- * Analizer implementation for Gmail.
+ * Analizer implementation for Gmail capture.
  */
 public class GmailAnalizerImpl implements Analizer{
 
     private static final String TAG = "GmailAnalizer";
 
+    /** GmailDto object that stores the user information */
     private GmailDto gmailDto;
 
     public GmailAnalizerImpl(){
@@ -40,7 +41,7 @@ public class GmailAnalizerImpl implements Analizer{
                 case Strings.WIDGET_SPINNER: //Sender
                     gmailDto.setSender(Helper.getEventText(eventSto.getEvent()));
                     break;
-                case Strings.WIDGET_MULTIAUTOCOMPLETETEXTVIEW: //Receivers
+                case Strings.WIDGET_AUTOCOMPLETE: //Receivers
                     if(eventSto.getEvent().getEventType() == AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED){
                         String receiver = Helper.getEventText(eventSto.getEvent());
                         if(receiver.endsWith(", ")){
@@ -57,7 +58,7 @@ public class GmailAnalizerImpl implements Analizer{
                     gmailDto.setSubject(Helper.getEventText(eventSto.getEvent()));
 
                     break;
-                case Strings.VIEW_VIEW: //Mail body
+                case Strings.WIDGET_VIEW_VIEW: //Mail body
                     // Deprecated, not using View_View event anymmore, in fact, the body write doesn't generates any event.
                     gmailDto.setBody(Helper.getEventText(eventSto.getEvent()));
 
@@ -77,13 +78,13 @@ public class GmailAnalizerImpl implements Analizer{
 
     /**
      * Extract the receiverse from the event raw string.
-     * @param receivers the receivers data string.
+     * @param rawReceivers the receivers data string.
      * @return Realm string list.
      */
-    private RealmList<String> formatReceivers(String receivers){
+    private RealmList<String> formatReceivers(String rawReceivers){
         //Receivers is a String like "<albertodlfnte@gmail.com>, <adelafue@gmail.com>, ";
         RealmList<String> receiversList = new RealmList<>();
-        String[] receiversArray = receivers.split(", ");
+        String[] receiversArray = rawReceivers.split(", ");
 
         for(int i = 0; i<receiversArray.length; i++){
             receiversList.add(receiversArray[i]);

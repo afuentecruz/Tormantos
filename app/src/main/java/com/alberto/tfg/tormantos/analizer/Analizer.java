@@ -15,4 +15,5 @@ public interface Analizer {
      * @param eventSto the accessibility event, encapsulated
      */
     void compute(EventSto eventSto);
+
 }
