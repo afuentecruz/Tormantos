@@ -20,8 +20,8 @@ public class AccessibilityServiceImpl extends android.accessibilityservice.Acces
 
     @Override
     public void onAccessibilityEvent(final AccessibilityEvent event) {
-        if (event.getText().isEmpty())
-            return;
+//        if (event.getText().isEmpty())
+//            return;
 
         eventHandler.handleEvent(event, new Date());
     }
@@ -31,7 +31,7 @@ public class AccessibilityServiceImpl extends android.accessibilityservice.Acces
         super.onCreate();
         Log.d(TAG, "onCreate");
 
-        this.eventHandler = new EventHandler();
+        this.eventHandler = new EventHandler(this.getApplicationContext());
     }
 
     @Override
