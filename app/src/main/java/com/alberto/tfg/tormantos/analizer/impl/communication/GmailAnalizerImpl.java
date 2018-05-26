@@ -15,26 +15,28 @@ import io.realm.RealmList;
 /**
  * Analizer implementation for Gmail capture.
  */
-public class GmailAnalizerImpl implements Analizer{
+public class GmailAnalizerImpl implements Analizer {
 
     private static final String TAG = "GmailAnalizer";
 
-    /** GmailDto object that stores the user information */
+    /**
+     * GmailDto object that stores the user information
+     */
     private GmailDto gmailDto;
 
-    public GmailAnalizerImpl(){
+    public GmailAnalizerImpl() {
         gmailDto = new GmailDto();
     }
 
     @Override
     public void compute(EventSto eventSto) {
 
-        if(eventSto.getEvent().getEventType() == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED){
+        if (eventSto.getEvent().getEventType() == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
             // Gmail was launched, instantiate it
             gmailDto = new GmailDto();
-        }else{
+        } else {
             // Whatever accessibility event
-            switch(eventSto.getClassName()){
+            switch (eventSto.getClassName()) {
                 case Strings.WIDGET_IMAGEBUTTON:
                     Log.d(TAG, "Redactar nuevo correo!");
                     break;
@@ -42,9 +44,9 @@ public class GmailAnalizerImpl implements Analizer{
                     gmailDto.setSender(Helper.getEventText(eventSto.getEvent()));
                     break;
                 case Strings.WIDGET_AUTOCOMPLETE: //Receivers
-                    if(eventSto.getEvent().getEventType() == AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED){
+                    if (eventSto.getEvent().getEventType() == AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED) {
                         String receiver = Helper.getEventText(eventSto.getEvent());
-                        if(receiver.endsWith(", ")){
+                        if (receiver.endsWith(", ")) {
                             // Extract all the receivers one by one
                             receiver = receiver.replace("<", "");
                             receiver = receiver.replace(">", "");
@@ -64,9 +66,9 @@ public class GmailAnalizerImpl implements Analizer{
 
                     break;
                 case Strings.WIDGET_TOAST: //Mail finally send
-                    if(Helper.getEventText(eventSto.getEvent()).equals(Strings.KEY_GMAIL_SENDED)) {
+                    if (Helper.getEventText(eventSto.getEvent()).equals(Strings.KEY_GMAIL_SENDED)) {
                         gmailDto.setTimestamp(eventSto.getCaptureInstant());
-                        GmailManager.saveOrUpdateGmailDB(this.gmailDto);
+                        storeObjectInRealm();
                     }
 
                     break;
@@ -78,17 +80,27 @@ public class GmailAnalizerImpl implements Analizer{
 
     /**
      * Extract the receiverse from the event raw string.
+     *
      * @param rawReceivers the receivers data string.
      * @return Realm string list.
      */
-    private RealmList<String> formatReceivers(String rawReceivers){
+    private RealmList<String> formatReceivers(String rawReceivers) {
         //Receivers is a String like "<albertodlfnte@gmail.com>, <adelafue@gmail.com>, ";
         RealmList<String> receiversList = new RealmList<>();
         String[] receiversArray = rawReceivers.split(", ");
 
-        for(int i = 0; i<receiversArray.length; i++){
+        for (int i = 0; i < receiversArray.length; i++) {
             receiversList.add(receiversArray[i]);
         }
         return receiversList;
+    }
+
+    /**
+     * Stores the GmailDto into RealmDB.
+     */
+    public void storeObjectInRealm() {
+        if (this.gmailDto != null) {
+            GmailManager.saveOrUpdateGmailDB(this.gmailDto);
+        }
     }
 }

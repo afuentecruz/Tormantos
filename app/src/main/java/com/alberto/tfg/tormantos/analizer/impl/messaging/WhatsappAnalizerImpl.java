@@ -41,10 +41,14 @@ public class WhatsappAnalizerImpl implements Analizer {
 
         switch (eventSto.getClassName()) {
             case Strings.CLASS_HOMEACTIVITY: // Navigated to WhatsApp home
-                Log.d(TAG, "Home");
-                storeObjectInRealm(eventSto.getCaptureInstant());
+
+                // Stores any previous content in database)
+                this.whatsappDto.setEndTimestamp(eventSto.getCaptureInstant());
+                storeObjectInRealm();
+
                 // Create a new whatsappDto object
                 this.whatsappDto = new WhatsappDto(eventSto.getCaptureInstant());
+                this.whatsappDto.setInterlocutor("Whatsapp Home"); // user navigated to WhatsApp home
                 this.currentMessage = "";
 
                 break;
@@ -96,15 +100,11 @@ public class WhatsappAnalizerImpl implements Analizer {
     }
 
 
-    public void storeObjectInRealm(Date timestamp) {
-
+    /**
+     * Stores the WhatsappDto into RealmDB.
+     */
+    public void storeObjectInRealm() {
         if (this.whatsappDto != null && this.whatsappDto.getInterlocutor() != null) {
-            if (this.whatsappDto.getInterlocutor().equals("")) {
-                this.whatsappDto.setInterlocutor("Whatsapp Home");
-            }
-
-            this.whatsappDto.setEndTimestamp(timestamp);
-            Log.d(TAG, "save: " + whatsappDto.toString());
             WhatsappManager.saveOrUpdateWhatsappDB(this.whatsappDto);
         }
     }

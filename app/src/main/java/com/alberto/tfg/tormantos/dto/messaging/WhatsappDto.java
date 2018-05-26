@@ -39,6 +39,7 @@ public class WhatsappDto extends RealmObject {
         this.id = UUID.randomUUID().toString(); //Randomized id.
         this.startTimestamp = startTimestamp;
         textList = new RealmList<>();
+        this.interlocutor = ""; 
     }
 
     public WhatsappDto(String id, String interlocutor, RealmList<TimestampString> textList, Date startTimestamp, Date endTimestamp) {

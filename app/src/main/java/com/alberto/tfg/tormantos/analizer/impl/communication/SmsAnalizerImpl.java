@@ -12,21 +12,25 @@ import com.alberto.tfg.tormantos.utils.Strings;
 /**
  * Analizer implementation for sms capture
  */
-public class SmsAnalizerImpl implements Analizer{
+public class SmsAnalizerImpl implements Analizer {
 
     private static final String TAG = "SmsAnalizer";
 
-    /** SmsDto object that stores the user information */
+    /**
+     * SmsDto object that stores the user information
+     */
     private SmsDto smsDto;
 
-    /** Current contact name */
+    /**
+     * Current contact name
+     */
     private String currentContactName = "";
 
     @Override
     public void compute(EventSto eventSto) {
         Helper.log(eventSto);
 
-        switch (eventSto.getClassName()){
+        switch (eventSto.getClassName()) {
             case Strings.CLASS_SMS_CONVERSATION:
                 Log.d(TAG, "empezada conversación de sms");
                 this.smsDto = new SmsDto();
@@ -49,9 +53,14 @@ public class SmsAnalizerImpl implements Analizer{
         }
     }
 
-    private void formatReceivers(String rawReceivers){
-        for(int i = 0; i < rawReceivers.length(); i++){
-            if(rawReceivers.substring(i, rawReceivers.length()).equals(Strings.KEY_SMS_CONTACT_ADDED)){
+    /**
+     * Get the sms receivers from the raw string
+     * located into the event text.
+     * @param rawReceivers the event text string.
+     */
+    private void formatReceivers(String rawReceivers) {
+        for (int i = 0; i < rawReceivers.length(); i++) {
+            if (rawReceivers.substring(i, rawReceivers.length()).equals(Strings.KEY_SMS_CONTACT_ADDED)) {
                 Log.d(TAG, "Contact SMS: " + rawReceivers.substring(0, i));
                 this.smsDto.getReceivers().add(rawReceivers.substring(0, i));
                 this.currentContactName = rawReceivers.substring(0, i);
@@ -59,12 +68,18 @@ public class SmsAnalizerImpl implements Analizer{
         }
     }
 
-    private void storeObjectInRealm(){
-        if(this.smsDto.getReceivers().size() == 0){
-            this.smsDto.getReceivers().add("Unknown");
+    /**
+     * Stores the smsDto object into realmDB.
+     */
+    public void storeObjectInRealm() {
+        if (this.smsDto.getReceivers().size() == 0) {
+            if (!("".equals(this.currentContactName) || currentContactName != null)) {
+                this.smsDto.getReceivers().add(currentContactName);
+            } else {
+                this.smsDto.getReceivers().add("unknown");
+            }
+
         }
         SmsManager.saveOrUpdateSmsDB(this.smsDto);
-
-
     }
 }

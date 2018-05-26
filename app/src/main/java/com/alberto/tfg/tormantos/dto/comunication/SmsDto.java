@@ -1,7 +1,6 @@
 package com.alberto.tfg.tormantos.dto.comunication;
 
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.UUID;
 
@@ -59,7 +58,7 @@ public class SmsDto extends RealmObject{
     public String toString() {
         return "SmsDto{" + "\n" +
                 "\t" + "content: " + content + "\n" +
-                "\t" + "receivers: " + Arrays.toString(receivers.toArray()) + "\n" +
+                "\t" + "receivers: " + receivers.toString() + "\n" +
                 "\t" + "sendTimestamp: " + sendTimestamp + "\n" +
                 "}" + "\n";
     }

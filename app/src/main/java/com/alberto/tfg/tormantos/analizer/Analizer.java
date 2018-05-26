@@ -10,10 +10,16 @@ public interface Analizer {
 
     /**
      * Main method of the analizer, implements
-     * the corresponding logic in order to extract the
-     * app context and information
+     * the required logic to extract the
+     * app context and user information
+     *
      * @param eventSto the accessibility event, encapsulated
      */
     void compute(EventSto eventSto);
+
+    /**
+     * Stores the analized object in realmDB
+     */
+    void storeObjectInRealm();
 
 }

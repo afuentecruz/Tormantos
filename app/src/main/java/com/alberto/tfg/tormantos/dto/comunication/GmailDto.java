@@ -89,7 +89,7 @@ public class GmailDto extends RealmObject {
     public String toString() {
         return "GmailDto{" + "\n" +
                 "\t" + "sender: " + sender + "\n" +
-                "\t" + "receivers: " + receivers.toString() + "\n" +
+                "\t" + "receivers: " + receivers.toString()+ "\n" +
                 "\t" + "subject: " + subject + "\n" +
                 "\t" + "body: " + body + "\n" +
                 "\t" + "timestamp: " + timestamp + "\n" +
