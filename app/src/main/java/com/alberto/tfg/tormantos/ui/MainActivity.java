@@ -129,19 +129,25 @@ public class MainActivity extends AppCompatActivity
             dbContentFragment.setContentDescription(Strings.PACKAGE_WHATSAPP);
             android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.main_content, dbContentFragment, DBContentFragment.TAG).commit();
+
         } else if (id == R.id.gmail) {
             // Show the GMail stored content
             dbContentFragment.setContentDescription(Strings.PACKAGE_GMAIL);
             android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.main_content, dbContentFragment, DBContentFragment.TAG).commit();
+
         } else if (id == R.id.sms) {
             // Show the Sms stored content
             dbContentFragment.setContentDescription(Strings.PACKAGE_SMS);
             android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.main_content, dbContentFragment, DBContentFragment.TAG).commit();
 
+        } else if (id == R.id.firefox) {
+            // Show the firefox stored content
+            dbContentFragment.setContentDescription(Strings.PACKAGE_FIREFOX);
+            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.main_content, dbContentFragment, DBContentFragment.TAG).commit();
 
-        } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
 

@@ -7,12 +7,18 @@ package com.alberto.tfg.tormantos.utils;
 public class Strings {
 
     /** Apps package name keys */
+    // Communications
     public static final String PACKAGE_GMAIL = "com.google.android.gm";
+    public static final String PACKAGE_SMS = "com.google.android.apps.messaging";
+    // Messaging
     public static final String PACKAGE_WHATSAPP = "com.whatsapp";
     public static final String PACKAGE_TELEGRAM = "org.telegram.messenger";
-    public static final String PACKAGE_SMS = "com.google.android.apps.messaging";
+    // Web browsing
+    public static final String PACKAGE_FIREFOX = "org.mozilla.firefox";
+    // General
     public static final String PACKAGE_KEYBOARD = "com.google.android.inputmethod.latin";
     public static final String PACKAGE_SHORTCUT = "is.shortcut";
+
 
     /** Android softkeyboard keys */
     public static final String KEY_KEYBOARD_SHOW_MSG = "Mostrando teclado español (España) (QWERTY (Ñ))";
@@ -26,6 +32,9 @@ public class Strings {
 
     /** Sms keys */
     public static final String KEY_SMS_CONTACT_ADDED = "ya se ha añadido, ahora estás editándolo";
+
+    /** Firefox keys */
+    public static final String KEY_FIREFOX_SEARCH  = "Término de búsqueda o dirección";
 
     /** Sms UI class */
     public static final String CLASS_SMS_CONVERSATION = "com.google.android.apps.messaging.ui.conversation.ConversationActivity";

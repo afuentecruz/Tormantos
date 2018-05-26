@@ -9,9 +9,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.alberto.tfg.tormantos.R;
+import com.alberto.tfg.tormantos.dto.browsing.FirefoxDto;
 import com.alberto.tfg.tormantos.dto.comunication.GmailDto;
 import com.alberto.tfg.tormantos.dto.comunication.SmsDto;
 import com.alberto.tfg.tormantos.dto.messaging.WhatsappDto;
+import com.alberto.tfg.tormantos.manager.browsing.FirefoxManager;
 import com.alberto.tfg.tormantos.manager.communication.GmailManager;
 import com.alberto.tfg.tormantos.manager.communication.SmsManager;
 import com.alberto.tfg.tormantos.manager.messaging.WhatsappManager;
@@ -64,6 +66,8 @@ public class DBContentFragment extends Fragment {
                     break;
                 case Strings.PACKAGE_SMS:
                     dbListView.setAdapter(new ArrayAdapter<SmsDto>(this.getActivity(), android.R.layout.simple_list_item_1, SmsManager.getAllSmsModels()));
+                case Strings.PACKAGE_FIREFOX:
+                    dbListView.setAdapter(new ArrayAdapter<FirefoxDto>(this.getActivity(), android.R.layout.simple_list_item_1, FirefoxManager.getAllFirefoxModels()));
                 default:
                     break;
             }

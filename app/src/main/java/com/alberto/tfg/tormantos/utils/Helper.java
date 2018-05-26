@@ -42,7 +42,6 @@ public class Helper {
                     sdf.format(event.getCaptureInstant()).toString(), getEventText(event.getEvent()))
             );
         }
-
     }
 
     public static String getEventType(AccessibilityEvent event) {

@@ -1,8 +1,11 @@
 package com.alberto.tfg.tormantos.handler;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
+import android.view.accessibility.AccessibilityNodeInfo;
 
+import com.alberto.tfg.tormantos.analizer.impl.browsing.FirefoxAnalizerImpl;
 import com.alberto.tfg.tormantos.analizer.impl.communication.GmailAnalizerImpl;
 import com.alberto.tfg.tormantos.analizer.impl.communication.SmsAnalizerImpl;
 import com.alberto.tfg.tormantos.analizer.impl.messaging.WhatsappAnalizerImpl;
@@ -23,6 +26,8 @@ public class EventHandler {
 
     private static final String TAG = "EventHandler";
 
+    private Context context;
+
     /** Date formatter */
     private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY HH:mm:ss");
 
@@ -36,13 +41,33 @@ public class EventHandler {
     /** Instant messaging analizers */
     private WhatsappAnalizerImpl whatsappAnalizer;
 
+    /** Web browsing analizers */
+    private FirefoxAnalizerImpl firefoxAnalizer;
 
-    public EventHandler() {
-        Log.d(TAG, "constructor!");
-        whatsappAnalizer = new WhatsappAnalizerImpl();
-        gmailAnalizer = new GmailAnalizerImpl();
-        smsAnalizer = new SmsAnalizerImpl();
+
+    public EventHandler(Context context) {
+        this.context = context;
         currentPackage = "";
+
+        whatsappAnalizer = new WhatsappAnalizerImpl(context);
+        gmailAnalizer = new GmailAnalizerImpl(context);
+        smsAnalizer = new SmsAnalizerImpl(context);
+        firefoxAnalizer = new FirefoxAnalizerImpl(context);
+
+    }
+
+    private void checkSource(AccessibilityNodeInfo source){
+        if (source != null) {
+            Log.d("Source:", source.toString());
+            /*
+            List<AccessibilityNodeInfo> findAccessibilityNodeInfosByViewId = source.findAccessibilityNodeInfosByViewId();
+            if (findAccessibilityNodeInfosByViewId.size() > 0) {
+                AccessibilityNodeInfo parent = (AccessibilityNodeInfo) findAccessibilityNodeInfosByViewId.get(0);
+                // You can also traverse the list if required data is deep in view hierarchy.
+                String requiredText = parent.getText().toString();
+                Log.d("Source parentText", requiredText);
+            }*/
+        }
     }
 
     public void handleEvent(AccessibilityEvent event, Date timestamp) {
@@ -51,11 +76,14 @@ public class EventHandler {
                 event.getPackageName().toString(),
                 event.getClassName().toString());
 
-        checkRemainingData(eventSto);
+        commitAnalizerData(eventSto);
+
+      //  this.checkSource(event.getSource());
 
         // -- Stores the current listening app package name if it isn't the keyboard
         if (!eventSto.getPackageName().equals(Strings.PACKAGE_KEYBOARD))
             currentPackage = eventSto.getPackageName();
+        Log.d(TAG, currentPackage);
         Helper.log(eventSto);
 
         switch (eventSto.getPackageName()) {
@@ -73,6 +101,10 @@ public class EventHandler {
                 whatsappAnalizer.compute(eventSto);
                 break;
 
+            // Web browsing cases
+            case Strings.PACKAGE_FIREFOX:
+                firefoxAnalizer.compute(eventSto);
+                break;
 
             // Generals cases
             case Strings.PACKAGE_KEYBOARD: // Keyboard displayed event
@@ -128,12 +160,12 @@ public class EventHandler {
      *
      * @param eventSto the EventSto.
      */
-    private void checkRemainingData(EventSto eventSto) {
+    private void commitAnalizerData(EventSto eventSto) {
         if (!eventSto.getPackageName().equals(Strings.PACKAGE_KEYBOARD)
                 && !eventSto.getPackageName().equals(this.currentPackage)) {
             switch (this.currentPackage) {
                 case Strings.PACKAGE_WHATSAPP:
-                    whatsappAnalizer.storeObjectInRealm(eventSto.getCaptureInstant());
+                    whatsappAnalizer.checkRemainingData(eventSto);
                     break;
                 default:
                     break;

@@ -90,7 +90,6 @@ public class WhatsappDto extends RealmObject {
                 '}' + "\n";
          */
         return "WhatsappDto{" + "\n" +
-                "\t" + "id: " + id + "\n" +
                 "\t" + "interlocutor: " + interlocutor + "\n" +
                 "\t" + "start: " + Helper.formatDate(startTimestamp) + "\n" +
                 "\t" + "end: " + Helper.formatDate(endTimestamp) + "\n" +

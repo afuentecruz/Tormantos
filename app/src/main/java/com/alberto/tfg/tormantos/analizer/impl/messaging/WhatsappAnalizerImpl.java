@@ -1,6 +1,7 @@
 package com.alberto.tfg.tormantos.analizer.impl.messaging;
 
-import android.util.Log;
+import android.content.Context;
+import android.widget.Toast;
 
 import com.alberto.tfg.tormantos.analizer.Analizer;
 import com.alberto.tfg.tormantos.dto.common.TimestampString;
@@ -18,17 +19,23 @@ import java.util.Date;
 public class WhatsappAnalizerImpl implements Analizer {
 
     private static final String TAG = "WhatsappAnalizer";
-
-    /** The message that the user is writting */
+    private Context context;
+    /**
+     * The message that the user is writting
+     */
     private String currentMessage;
-    /** Contact name of the person who the user is writting */
+    /**
+     * Contact name of the person who the user is writting
+     */
     private String currentInterlocutor;
-    /** WhatsappDto object that stores all the information */
+    /**
+     * WhatsappDto object that stores all the information
+     */
     private WhatsappDto whatsappDto;
 
 
-    public WhatsappAnalizerImpl() {
-        Log.d(TAG, "Constructor del whatsappAnalizer");
+    public WhatsappAnalizerImpl(Context context) {
+        this.context = context;
         whatsappDto = null;
     }
 
@@ -99,6 +106,22 @@ public class WhatsappAnalizerImpl implements Analizer {
         this.whatsappDto.getTextList().add(ts);
     }
 
+    /**
+     * Checks if there is any remaining data waiting to be stored
+     * in the dto.
+     *
+     * @param eventSto the EventSto.
+     */
+    public void checkRemainingData(EventSto eventSto) {
+        if (this.whatsappDto.getTextList() != null &&
+                this.whatsappDto.getStartTimestamp() != null &&
+                this.whatsappDto.getInterlocutor() != null) {
+
+            this.whatsappDto.setEndTimestamp(eventSto.getCaptureInstant());
+            storeObjectInRealm();
+        }
+    }
+
 
     /**
      * Stores the WhatsappDto into RealmDB.
@@ -106,6 +129,8 @@ public class WhatsappAnalizerImpl implements Analizer {
     public void storeObjectInRealm() {
         if (this.whatsappDto != null && this.whatsappDto.getInterlocutor() != null) {
             WhatsappManager.saveOrUpdateWhatsappDB(this.whatsappDto);
+            Toast.makeText(context, "Stored whatsapp:\n" + this.whatsappDto.toString(), Toast.LENGTH_LONG).show();
+
         }
     }
 }

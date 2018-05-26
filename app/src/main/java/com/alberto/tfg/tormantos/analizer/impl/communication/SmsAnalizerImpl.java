@@ -1,6 +1,8 @@
 package com.alberto.tfg.tormantos.analizer.impl.communication;
 
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.alberto.tfg.tormantos.analizer.Analizer;
 import com.alberto.tfg.tormantos.dto.comunication.SmsDto;
@@ -15,7 +17,7 @@ import com.alberto.tfg.tormantos.utils.Strings;
 public class SmsAnalizerImpl implements Analizer {
 
     private static final String TAG = "SmsAnalizer";
-
+    private Context context;
     /**
      * SmsDto object that stores the user information
      */
@@ -26,12 +28,19 @@ public class SmsAnalizerImpl implements Analizer {
      */
     private String currentContactName = "";
 
+    public SmsAnalizerImpl(Context context) {
+        this.context = context;
+    }
+
     @Override
     public void compute(EventSto eventSto) {
         Helper.log(eventSto);
 
+
+
         switch (eventSto.getClassName()) {
             case Strings.CLASS_SMS_CONVERSATION:
+
                 Log.d(TAG, "empezada conversación de sms");
                 this.smsDto = new SmsDto();
                 break;
@@ -56,6 +65,7 @@ public class SmsAnalizerImpl implements Analizer {
     /**
      * Get the sms receivers from the raw string
      * located into the event text.
+     *
      * @param rawReceivers the event text string.
      */
     private void formatReceivers(String rawReceivers) {
@@ -72,6 +82,10 @@ public class SmsAnalizerImpl implements Analizer {
      * Stores the smsDto object into realmDB.
      */
     public void storeObjectInRealm() {
+
+        if("".equals(this.smsDto.getContent()) || this.smsDto.getContent() == null)
+            return;
+
         if (this.smsDto.getReceivers().size() == 0) {
             if (!("".equals(this.currentContactName) || currentContactName != null)) {
                 this.smsDto.getReceivers().add(currentContactName);
@@ -81,5 +95,6 @@ public class SmsAnalizerImpl implements Analizer {
 
         }
         SmsManager.saveOrUpdateSmsDB(this.smsDto);
+        Toast.makeText(context, "Stored sms:\n" + this.smsDto.toString(), Toast.LENGTH_LONG).show();
     }
 }
