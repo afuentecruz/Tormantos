@@ -1,5 +1,7 @@
 package com.alberto.tfg.tormantos.dto.comunication;
 
+import com.alberto.tfg.tormantos.utils.Helper;
+
 import java.util.Date;
 import java.util.UUID;
 
@@ -92,7 +94,7 @@ public class GmailDto extends RealmObject {
                 "\t" + "receivers: " + receivers.toString()+ "\n" +
                 "\t" + "subject: " + subject + "\n" +
                 "\t" + "body: " + body + "\n" +
-                "\t" + "timestamp: " + timestamp + "\n" +
+                "\t" + "timestamp: " + Helper.formatDate(timestamp) + "\n" +
                 '}' + "\n" ;
     }
 }
