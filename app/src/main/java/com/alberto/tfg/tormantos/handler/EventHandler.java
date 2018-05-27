@@ -9,6 +9,7 @@ import com.alberto.tfg.tormantos.analizer.impl.browsing.FirefoxAnalizerImpl;
 import com.alberto.tfg.tormantos.analizer.impl.communication.GmailAnalizerImpl;
 import com.alberto.tfg.tormantos.analizer.impl.communication.SmsAnalizerImpl;
 import com.alberto.tfg.tormantos.analizer.impl.messaging.WhatsappAnalizerImpl;
+import com.alberto.tfg.tormantos.analizer.impl.system.NotificationAnalizerImpl;
 import com.alberto.tfg.tormantos.sto.EventSto;
 import com.alberto.tfg.tormantos.utils.Helper;
 import com.alberto.tfg.tormantos.utils.Strings;
@@ -28,21 +29,36 @@ public class EventHandler {
 
     private Context context;
 
-    /** Date formatter */
+    /**
+     * Date formatter
+     */
     private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY HH:mm:ss");
 
-    /** String that stores the current packages the app is processing in a certai instant */
+    /**
+     * String that stores the current packages the app is processing in a certai instant
+     */
     private String currentPackage;
 
-    /** General communication analizers */
+    /**
+     * General communication analizers
+     */
     private GmailAnalizerImpl gmailAnalizer;
     private SmsAnalizerImpl smsAnalizer;
 
-    /** Instant messaging analizers */
+    /**
+     * Instant messaging analizers
+     */
     private WhatsappAnalizerImpl whatsappAnalizer;
 
-    /** Web browsing analizers */
+    /**
+     * Web browsing analizers
+     */
     private FirefoxAnalizerImpl firefoxAnalizer;
+
+    /**
+     * System events analizers
+     */
+    private NotificationAnalizerImpl notificationAnalizer;
 
 
     public EventHandler(Context context) {
@@ -53,10 +69,10 @@ public class EventHandler {
         gmailAnalizer = new GmailAnalizerImpl(context);
         smsAnalizer = new SmsAnalizerImpl(context);
         firefoxAnalizer = new FirefoxAnalizerImpl(context);
-
+        notificationAnalizer = new NotificationAnalizerImpl(context);
     }
 
-    private void checkSource(AccessibilityNodeInfo source){
+    private void checkSource(AccessibilityNodeInfo source) {
         if (source != null) {
             Log.d("Source:", source.toString());
             /*
@@ -76,14 +92,17 @@ public class EventHandler {
                 event.getPackageName().toString(),
                 event.getClassName().toString());
 
-        commitAnalizerData(eventSto);
+      //  commitAnalizerData(eventSto);
 
-      //  this.checkSource(event.getSource());
+        //  this.checkSource(event.getSource());
 
         // -- Stores the current listening app package name if it isn't the keyboard
-        if (!eventSto.getPackageName().equals(Strings.PACKAGE_KEYBOARD))
+        if (!eventSto.getPackageName().equals(Strings.PACKAGE_KEYBOARD) &&
+                !eventSto.getClassName().equals(Strings.CLASS_NOTIFICATION)) {
             currentPackage = eventSto.getPackageName();
-        Log.d(TAG, currentPackage);
+            Log.d(TAG, currentPackage);
+        }
+
         Helper.log(eventSto);
 
         switch (eventSto.getPackageName()) {
@@ -114,7 +133,15 @@ public class EventHandler {
                 handleShortchut(eventSto);
                 break;
             default:
-             //   Helper.log(eventSto);
+                //   Helper.log(eventSto);
+                break;
+        }
+
+        switch (eventSto.getClassName()) {
+            case Strings.CLASS_NOTIFICATION: // Android notification
+                notificationAnalizer.compute(eventSto);
+                break;
+            default:
                 break;
         }
     }
@@ -127,14 +154,38 @@ public class EventHandler {
      */
     private void handleKeyboardEvent(EventSto eventSto) {
         if (Helper.getEventText(eventSto.getEvent()).equals(Strings.KEY_KEYBOARD_SHOW_MSG)) {
-            switch (this.currentPackage) {
-                case Strings.PACKAGE_WHATSAPP:
-                    whatsappAnalizer.confirmKeyboardInput(eventSto.getCaptureInstant());
+            handleShowKeyboard(eventSto);
+        } else if (Helper.getEventText(eventSto.getEvent()).equals(Strings.KEY_KEYBOARD_HIDE_MSG)) {
+            handleHideKeyboard(eventSto);
+        }
+    }
 
-                    break;
-                default:
-                    break;
-            }
+    /**
+     * Handles a show keyboard event
+     *
+     * @param eventSto the EventSto.
+     */
+    private void handleShowKeyboard(EventSto eventSto) {
+        switch (this.currentPackage) {
+            case Strings.PACKAGE_WHATSAPP:
+                whatsappAnalizer.confirmKeyboardInput(eventSto.getCaptureInstant());
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * Handles a hide keyboard event
+     *
+     * @param eventSto the EventSto.
+     */
+    private void handleHideKeyboard(EventSto eventSto) {
+        switch (this.currentPackage) {
+            case Strings.PACKAGE_FIREFOX:
+                firefoxAnalizer.confirmKeyboardInput(eventSto.getCaptureInstant());
+            default:
+                break;
         }
     }
 

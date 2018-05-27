@@ -1,5 +1,7 @@
 package com.alberto.tfg.tormantos.dto.browsing;
 
+import com.alberto.tfg.tormantos.utils.Helper;
+
 import java.util.Date;
 import java.util.UUID;
 
@@ -43,7 +45,7 @@ public class FirefoxDto extends RealmObject {
     public String toString() {
         return "FirefoxDto{" + "\n" +
                 "\t" + "searchUrl: " + searchUrl + "\n" +
-                "\t" + "timestamp:" + timestamp + "\n" +
+                "\t" + "timestamp:" + Helper.formatDate(timestamp) + "\n" +
                 '}' + "\n";
     }
 }
