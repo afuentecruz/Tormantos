@@ -22,7 +22,9 @@ public class Strings {
 
     /** Android softkeyboard keys */
     public static final String KEY_KEYBOARD_SHOW_MSG = "Mostrando teclado español (España) (QWERTY (Ñ))";
+    public static final String KEY_KEYBOARD_HIDE_MSG ="El teclado español (España) (QWERTY (Ñ)) está oculto";
     public static final String KEY_KEYBOARD_WRITTE_MSG = "Escribir mensaje";
+
 
     /** WhatsApp keys */
     public static final String KEY_WHATSAPP = "WhatsApp";
@@ -43,6 +45,7 @@ public class Strings {
     public static final String CLASS_HOMEACTIVITY = "com.whatsapp.HomeActivity";
 
     /** General android ui elements */
+    public static final String CLASS_NOTIFICATION = "android.app.Notification";
     public static final String WIDGET_RELATIVE_LAYOUT = "android.widget.RelativeLayout";
     public static final String WIDGET_IMAGEBUTTON = "android.widget.ImageButton";
     public static final String WIDGET_AUTOCOMPLETE = "android.widget.MultiAutoCompleteTextView";

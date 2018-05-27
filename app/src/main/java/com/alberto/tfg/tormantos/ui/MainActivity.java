@@ -127,34 +127,25 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.whatsapp) {
             // Show the WhatsApp stored content
             dbContentFragment.setContentDescription(Strings.PACKAGE_WHATSAPP);
-            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.main_content, dbContentFragment, DBContentFragment.TAG).commit();
-
         } else if (id == R.id.gmail) {
             // Show the GMail stored content
             dbContentFragment.setContentDescription(Strings.PACKAGE_GMAIL);
-            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.main_content, dbContentFragment, DBContentFragment.TAG).commit();
 
         } else if (id == R.id.sms) {
             // Show the Sms stored content
             dbContentFragment.setContentDescription(Strings.PACKAGE_SMS);
-            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.main_content, dbContentFragment, DBContentFragment.TAG).commit();
 
         } else if (id == R.id.firefox) {
             // Show the firefox stored content
             dbContentFragment.setContentDescription(Strings.PACKAGE_FIREFOX);
-            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.main_content, dbContentFragment, DBContentFragment.TAG).commit();
-
-
-        } else if (id == R.id.nav_share) {
-
+        } else if (id == R.id.notifications) {
+            // Show the notifications related stored content
+            dbContentFragment.setContentDescription(Strings.CLASS_NOTIFICATION);
         } else if (id == R.id.nav_send) {
-
         }
 
+        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.main_content, dbContentFragment, DBContentFragment.TAG).commit();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
