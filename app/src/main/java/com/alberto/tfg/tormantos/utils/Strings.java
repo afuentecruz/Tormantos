@@ -46,6 +46,7 @@ public class Strings {
 
     /** General android ui elements */
     public static final String CLASS_NOTIFICATION = "android.app.Notification";
+    public static final String WIDGET_FRAME = "android.widget.FrameLayout";
     public static final String WIDGET_RELATIVE_LAYOUT = "android.widget.RelativeLayout";
     public static final String WIDGET_IMAGEBUTTON = "android.widget.ImageButton";
     public static final String WIDGET_AUTOCOMPLETE = "android.widget.MultiAutoCompleteTextView";

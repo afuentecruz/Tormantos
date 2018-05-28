@@ -17,7 +17,7 @@ public class FirefoxManager {
      * Save or update an FirefoxDto object in DB
      * @param firefoxDto, FirefoxDto  object to save in realm
      */
-    public static void saveOrUpdateGmailDB(FirefoxDto firefoxDto){
+    public static void saveOrUpdateFirefoxDB(FirefoxDto firefoxDto){
         Realm realm = Realm.getDefaultInstance(); //instantiate RealmDB
 
         //Save or update event

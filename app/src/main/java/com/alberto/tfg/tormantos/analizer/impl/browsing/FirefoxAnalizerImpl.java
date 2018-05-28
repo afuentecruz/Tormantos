@@ -23,18 +23,42 @@ public class FirefoxAnalizerImpl implements Analizer {
 
     private FirefoxDto firefoxDto;
 
+    private boolean confirmInput = false;
+
     public FirefoxAnalizerImpl(Context context) {
         this.context = context;
-        firefoxDto = new FirefoxDto();
     }
 
     @Override
     public void compute(EventSto eventSto) {
+        Helper.log(eventSto);
+
         switch (eventSto.getClassName()) {
             case Strings.WIDGET_EDITTEXT:
-                if (!Strings.KEY_FIREFOX_SEARCH.equals(Helper.getEventText(eventSto.getEvent()))) {
+                if (!Strings.KEY_FIREFOX_SEARCH.equals(Helper.getEventText(eventSto.getEvent()))
+                        && !("".equals(Helper.getEventText(eventSto.getEvent())))) {
+                    firefoxDto = new FirefoxDto();
                     firefoxDto.setSearchUrl(Helper.getEventText(eventSto.getEvent()));
+
+                    if(confirmInput){
+                        firefoxDto.setTimestamp(eventSto.getCaptureInstant());
+                        this.storeObjectInRealm();
+                        confirmInput = false;
+                    }
                 }
+                break;
+            case Strings.WIDGET_FRAME: // A web shortcut has been clicked
+                if (!(Strings.KEY_FIREFOX_SEARCH.equals(Helper.getEventText(eventSto.getEvent())))
+                        && !("".equals(Helper.getEventText(eventSto.getEvent())))) {
+                   confirmInput = true;
+                }
+                break;
+            case Strings.WIDGET_LINEAR_LAYOUT: // // A bookmark is clicked
+                if (!(Strings.KEY_FIREFOX_SEARCH.equals(Helper.getEventText(eventSto.getEvent())))
+                        && !("".equals(Helper.getEventText(eventSto.getEvent())))) {
+                    confirmInput = true;
+                }
+            default:
                 break;
         }
     }
@@ -45,7 +69,7 @@ public class FirefoxAnalizerImpl implements Analizer {
                 firefoxDto.getSearchUrl() != null &&
                 firefoxDto.getTimestamp() != null) {
 
-            FirefoxManager.saveOrUpdateGmailDB(this.firefoxDto);
+            FirefoxManager.saveOrUpdateFirefoxDB(this.firefoxDto);
             Toast.makeText(context, "Stored firefox:\n" + this.firefoxDto.toString(), Toast.LENGTH_LONG).show();
 
         }
@@ -54,9 +78,10 @@ public class FirefoxAnalizerImpl implements Analizer {
     /**
      * Confirm the user inputs into the editText search
      * field.
+     *
      * @param timestamp date where the input has occurred
      */
-    public void confirmKeyboardInput(Date timestamp){
+    public void confirmKeyboardInput(Date timestamp) {
         firefoxDto.setTimestamp(timestamp);
         this.storeObjectInRealm();
     }

@@ -103,7 +103,6 @@ public class EventHandler {
             Log.d(TAG, currentPackage);
         }
 
-        Helper.log(eventSto);
 
         switch (eventSto.getPackageName()) {
 
