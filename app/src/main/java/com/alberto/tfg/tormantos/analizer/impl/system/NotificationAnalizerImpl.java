@@ -24,6 +24,16 @@ public class NotificationAnalizerImpl implements Analizer{
         this.context = context;
     }
 
+    public String getNotificationContent(EventSto eventSto){
+
+        String content = Helper.getEventText(eventSto.getEvent());
+        String senderName = null;
+        if(content.startsWith("Mensaje de")){
+            senderName = content.substring(content.indexOf("Mensaje de "), content.length());
+            System.out.println("notificador: " + senderName);
+        }
+        return senderName;
+    }
 
     @Override
     public void compute(EventSto eventSto) {

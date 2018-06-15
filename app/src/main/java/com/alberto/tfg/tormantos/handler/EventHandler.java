@@ -3,7 +3,6 @@ package com.alberto.tfg.tormantos.handler;
 import android.content.Context;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
-import android.view.accessibility.AccessibilityNodeInfo;
 
 import com.alberto.tfg.tormantos.analizer.impl.browsing.FirefoxAnalizerImpl;
 import com.alberto.tfg.tormantos.analizer.impl.communication.GmailAnalizerImpl;
@@ -72,27 +71,13 @@ public class EventHandler {
         notificationAnalizer = new NotificationAnalizerImpl(context);
     }
 
-    private void checkSource(AccessibilityNodeInfo source) {
-        if (source != null) {
-            Log.d("Source:", source.toString());
-            /*
-            List<AccessibilityNodeInfo> findAccessibilityNodeInfosByViewId = source.findAccessibilityNodeInfosByViewId();
-            if (findAccessibilityNodeInfosByViewId.size() > 0) {
-                AccessibilityNodeInfo parent = (AccessibilityNodeInfo) findAccessibilityNodeInfosByViewId.get(0);
-                // You can also traverse the list if required data is deep in view hierarchy.
-                String requiredText = parent.getText().toString();
-                Log.d("Source parentText", requiredText);
-            }*/
-        }
-    }
-
     public void handleEvent(AccessibilityEvent event, Date timestamp) {
 
         EventSto eventSto = new EventSto(event, timestamp,
                 event.getPackageName().toString(),
                 event.getClassName().toString());
 
-      //  commitAnalizerData(eventSto);
+        //  commitAnalizerData(eventSto);
 
         //  this.checkSource(event.getSource());
 
@@ -101,6 +86,8 @@ public class EventHandler {
                 !eventSto.getClassName().equals(Strings.CLASS_NOTIFICATION)) {
             currentPackage = eventSto.getPackageName();
             Log.d(TAG, currentPackage);
+        } else {
+            Helper.log(eventSto);
         }
 
 
@@ -139,6 +126,7 @@ public class EventHandler {
         switch (eventSto.getClassName()) {
             case Strings.CLASS_NOTIFICATION: // Android notification
                 notificationAnalizer.compute(eventSto);
+                getMessagingSender(eventSto);
                 break;
             default:
                 break;
@@ -220,6 +208,23 @@ public class EventHandler {
                 default:
                     break;
             }
+        }
+    }
+
+    /**
+     * Checks the notification content in order to extract any
+     * information about origin of the notification.
+     *
+     * @param eventSto, The EventSto.
+     */
+    private void getMessagingSender(EventSto eventSto) {
+        switch (eventSto.getPackageName()) {
+            case Strings.PACKAGE_WHATSAPP:
+                whatsappAnalizer.setCurrentInterlocutor(
+                        notificationAnalizer.getNotificationContent(eventSto));
+                break;
+            default:
+                break;
         }
     }
 }

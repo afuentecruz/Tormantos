@@ -39,6 +39,11 @@ public class WhatsappAnalizerImpl implements Analizer {
         whatsappDto = null;
     }
 
+    public void setCurrentInterlocutor(String interlocutor) {
+        if (interlocutor != null)
+            this.currentInterlocutor = interlocutor;
+    }
+
     @Override
     public void compute(EventSto eventSto) {
 
