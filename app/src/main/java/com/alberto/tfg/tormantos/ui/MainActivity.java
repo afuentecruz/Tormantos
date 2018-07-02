@@ -29,10 +29,14 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    /** Keys */
+    /**
+     * Keys
+     */
     private static final String TAG = "TORMANTOS MAIN ACTIVITY";
 
-    /** UI widgets */
+    /**
+     * UI widgets
+     */
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
@@ -44,8 +48,6 @@ public class MainActivity extends AppCompatActivity
 //
 //    @BindView(R.id.mainButton)
 //    FloatingActionButton mainFloatingButton;
-
-
 
 
     /**
@@ -79,7 +81,7 @@ public class MainActivity extends AppCompatActivity
 
             startActivityForResult(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS), 1);
 
-        }else{
+        } else {
             System.out.println("esto dice que guay");
         }
     }
@@ -138,6 +140,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.firefox) {
             // Show the firefox stored content
             dbContentFragment.setContentDescription(Strings.PACKAGE_FIREFOX);
+        } else if (id == R.id.chrome) {
+            // Show the chrome content
+            dbContentFragment.setContentDescription(Strings.PACKAGE_CHROME);
         } else if (id == R.id.notifications) {
             // Show the notifications related stored content
             dbContentFragment.setContentDescription(Strings.CLASS_NOTIFICATION);
@@ -163,6 +168,7 @@ public class MainActivity extends AppCompatActivity
     /**
      * Checks if the accessibility service 'MonitorService' is enabled in the
      * user accessibility settings
+     *
      * @param mContext application context
      * @return true is enabled, false in other case
      */

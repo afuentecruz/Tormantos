@@ -54,11 +54,7 @@ public class AccessibilityServiceImpl extends android.accessibilityservice.Acces
      * @return true if null, false otherwise.
      */
     private Boolean eventIsNull(AccessibilityEvent event) {
-        if (event.getPackageName() == null ||
-                event.getClassName() == null) {
-            return true;
-        } else {
-            return false;
-        }
+        return event.getPackageName() == null ||
+                event.getClassName() == null;
     }
 }

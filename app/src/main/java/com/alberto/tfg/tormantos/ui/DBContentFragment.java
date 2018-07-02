@@ -10,10 +10,12 @@ import android.widget.ListView;
 
 import com.alberto.tfg.tormantos.R;
 import com.alberto.tfg.tormantos.dto.NotificationDto;
+import com.alberto.tfg.tormantos.dto.browsing.ChromeDto;
 import com.alberto.tfg.tormantos.dto.browsing.FirefoxDto;
 import com.alberto.tfg.tormantos.dto.comunication.GmailDto;
 import com.alberto.tfg.tormantos.dto.comunication.SmsDto;
 import com.alberto.tfg.tormantos.dto.messaging.WhatsappDto;
+import com.alberto.tfg.tormantos.manager.browsing.ChromeManager;
 import com.alberto.tfg.tormantos.manager.browsing.FirefoxManager;
 import com.alberto.tfg.tormantos.manager.communication.GmailManager;
 import com.alberto.tfg.tormantos.manager.communication.SmsManager;
@@ -71,6 +73,9 @@ public class DBContentFragment extends Fragment {
                     break;
                 case Strings.PACKAGE_FIREFOX:
                     dbListView.setAdapter(new ArrayAdapter<FirefoxDto>(this.getActivity(), android.R.layout.simple_list_item_1, FirefoxManager.getAllFirefoxModels()));
+                    break;
+                case Strings.PACKAGE_CHROME:
+                    dbListView.setAdapter(new ArrayAdapter<ChromeDto>(this.getActivity(), android.R.layout.simple_list_item_1, ChromeManager.getAllChromeModels()));
                     break;
                 case Strings.CLASS_NOTIFICATION:
                     dbListView.setAdapter(new ArrayAdapter<NotificationDto>(this.getActivity(), android.R.layout.simple_list_item_1, NotificationManager.getAllNotificationModels()));

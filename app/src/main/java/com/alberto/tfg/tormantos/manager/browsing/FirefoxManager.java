@@ -35,7 +35,7 @@ public class FirefoxManager {
         Realm realm = Realm.getDefaultInstance();
 
         realm.beginTransaction();
-        //Find all the gmail models
+        //Find all the firefox models
         firefoxDBList = realm.where(FirefoxDto.class).findAll();
         realm.commitTransaction();
 

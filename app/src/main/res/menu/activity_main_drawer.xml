@@ -39,6 +39,11 @@
                 android:id="@+id/firefox"
                 android:icon="@drawable/ic_menu_manage"
                 android:title="Firefox" />
+
+            <item
+                android:id="@+id/chrome"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Chrome" />
         </menu>
     </item>
 

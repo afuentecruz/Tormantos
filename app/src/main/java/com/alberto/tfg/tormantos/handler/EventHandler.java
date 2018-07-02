@@ -1,9 +1,9 @@
 package com.alberto.tfg.tormantos.handler;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 
+import com.alberto.tfg.tormantos.analizer.impl.browsing.ChromeAnalizerImpl;
 import com.alberto.tfg.tormantos.analizer.impl.browsing.FirefoxAnalizerImpl;
 import com.alberto.tfg.tormantos.analizer.impl.communication.GmailAnalizerImpl;
 import com.alberto.tfg.tormantos.analizer.impl.communication.SmsAnalizerImpl;
@@ -53,6 +53,7 @@ public class EventHandler {
      * Web browsing analizers
      */
     private FirefoxAnalizerImpl firefoxAnalizer;
+    private ChromeAnalizerImpl chromeAnalizer;
 
     /**
      * System events analizers
@@ -68,6 +69,7 @@ public class EventHandler {
         gmailAnalizer = new GmailAnalizerImpl(context);
         smsAnalizer = new SmsAnalizerImpl(context);
         firefoxAnalizer = new FirefoxAnalizerImpl(context);
+        chromeAnalizer = new ChromeAnalizerImpl(context);
         notificationAnalizer = new NotificationAnalizerImpl(context);
     }
 
@@ -85,11 +87,10 @@ public class EventHandler {
         if (!eventSto.getPackageName().equals(Strings.PACKAGE_KEYBOARD) &&
                 !eventSto.getClassName().equals(Strings.CLASS_NOTIFICATION)) {
             currentPackage = eventSto.getPackageName();
-            Log.d(TAG, currentPackage);
-        } else {
-            Helper.log(eventSto);
+            //Log.d(TAG, currentPackage);
         }
 
+        Helper.log(eventSto);
 
         switch (eventSto.getPackageName()) {
 
@@ -109,6 +110,9 @@ public class EventHandler {
             // Web browsing cases
             case Strings.PACKAGE_FIREFOX:
                 firefoxAnalizer.compute(eventSto);
+                break;
+            case Strings.PACKAGE_CHROME:
+                chromeAnalizer.compute(eventSto);
                 break;
 
             // Generals cases
