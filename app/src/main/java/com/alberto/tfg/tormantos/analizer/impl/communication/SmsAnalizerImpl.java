@@ -6,7 +6,7 @@ import android.widget.Toast;
 
 import com.alberto.tfg.tormantos.analizer.Analizer;
 import com.alberto.tfg.tormantos.dto.comunication.SmsDto;
-import com.alberto.tfg.tormantos.manager.communication.SmsManager;
+import com.alberto.tfg.tormantos.manager.DBManager;
 import com.alberto.tfg.tormantos.sto.EventSto;
 import com.alberto.tfg.tormantos.utils.Helper;
 import com.alberto.tfg.tormantos.utils.Strings;
@@ -94,7 +94,7 @@ public class SmsAnalizerImpl implements Analizer {
             }
 
         }
-        SmsManager.saveOrUpdateSmsDB(this.smsDto);
+        DBManager.saveOrUpdate(this.smsDto);
         Toast.makeText(context, "Stored sms:\n" + this.smsDto.toString(), Toast.LENGTH_LONG).show();
     }
 }

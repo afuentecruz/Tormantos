@@ -6,7 +6,7 @@ import android.widget.Toast;
 import com.alberto.tfg.tormantos.analizer.Analizer;
 import com.alberto.tfg.tormantos.dto.common.TimestampString;
 import com.alberto.tfg.tormantos.dto.messaging.WhatsappDto;
-import com.alberto.tfg.tormantos.manager.messaging.WhatsappManager;
+import com.alberto.tfg.tormantos.manager.DBManager;
 import com.alberto.tfg.tormantos.sto.EventSto;
 import com.alberto.tfg.tormantos.utils.Helper;
 import com.alberto.tfg.tormantos.utils.Strings;
@@ -133,7 +133,7 @@ public class WhatsappAnalizerImpl implements Analizer {
      */
     public void storeObjectInRealm() {
         if (this.whatsappDto != null && this.whatsappDto.getInterlocutor() != null) {
-            WhatsappManager.saveOrUpdateWhatsappDB(this.whatsappDto);
+            DBManager.saveOrUpdate(this.whatsappDto);
             Toast.makeText(context, "Stored whatsapp:\n" + this.whatsappDto.toString(), Toast.LENGTH_LONG).show();
 
         }

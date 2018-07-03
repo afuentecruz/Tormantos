@@ -7,7 +7,7 @@ import android.widget.Toast;
 
 import com.alberto.tfg.tormantos.analizer.Analizer;
 import com.alberto.tfg.tormantos.dto.comunication.GmailDto;
-import com.alberto.tfg.tormantos.manager.communication.GmailManager;
+import com.alberto.tfg.tormantos.manager.DBManager;
 import com.alberto.tfg.tormantos.sto.EventSto;
 import com.alberto.tfg.tormantos.utils.Helper;
 import com.alberto.tfg.tormantos.utils.Strings;
@@ -104,7 +104,7 @@ public class GmailAnalizerImpl implements Analizer {
      */
     public void storeObjectInRealm() {
         if (this.gmailDto != null) {
-            GmailManager.saveOrUpdateGmailDB(this.gmailDto);
+            DBManager.saveOrUpdate(this.gmailDto);
             Toast.makeText(context, "Stored gmail:\n" + this.gmailDto.toString(), Toast.LENGTH_LONG).show();
 
         }

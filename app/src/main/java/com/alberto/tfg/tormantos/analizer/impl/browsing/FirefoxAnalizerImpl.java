@@ -5,7 +5,7 @@ import android.widget.Toast;
 
 import com.alberto.tfg.tormantos.analizer.Analizer;
 import com.alberto.tfg.tormantos.dto.browsing.FirefoxDto;
-import com.alberto.tfg.tormantos.manager.browsing.FirefoxManager;
+import com.alberto.tfg.tormantos.manager.DBManager;
 import com.alberto.tfg.tormantos.sto.EventSto;
 import com.alberto.tfg.tormantos.utils.Helper;
 import com.alberto.tfg.tormantos.utils.Strings;
@@ -69,7 +69,7 @@ public class FirefoxAnalizerImpl implements Analizer {
                 firefoxDto.getSearchUrl() != null &&
                 firefoxDto.getTimestamp() != null) {
 
-            FirefoxManager.saveOrUpdateFirefoxDB(this.firefoxDto);
+            DBManager.saveOrUpdate(this.firefoxDto);
             Toast.makeText(context, "Stored firefox:\n" + this.firefoxDto.toString(), Toast.LENGTH_LONG).show();
 
         }

@@ -21,7 +21,7 @@ public class AccessibilityServiceImpl extends android.accessibilityservice.Acces
     @Override
     public void onAccessibilityEvent(final AccessibilityEvent event) {
 
-        if (!eventIsNull(event)) {
+        if (!isEventNull(event)) {
             eventHandler.handleEvent(event, new Date());
         }
     }
@@ -53,7 +53,7 @@ public class AccessibilityServiceImpl extends android.accessibilityservice.Acces
      * @param event, the Accessibility Event.
      * @return true if null, false otherwise.
      */
-    private Boolean eventIsNull(AccessibilityEvent event) {
+    private Boolean isEventNull(AccessibilityEvent event) {
         return event.getPackageName() == null ||
                 event.getClassName() == null;
     }

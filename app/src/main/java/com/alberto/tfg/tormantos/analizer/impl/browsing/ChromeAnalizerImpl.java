@@ -5,7 +5,7 @@ import android.widget.Toast;
 
 import com.alberto.tfg.tormantos.analizer.Analizer;
 import com.alberto.tfg.tormantos.dto.browsing.ChromeDto;
-import com.alberto.tfg.tormantos.manager.browsing.ChromeManager;
+import com.alberto.tfg.tormantos.manager.DBManager;
 import com.alberto.tfg.tormantos.sto.EventSto;
 import com.alberto.tfg.tormantos.utils.Helper;
 import com.alberto.tfg.tormantos.utils.Strings;
@@ -49,7 +49,7 @@ public class ChromeAnalizerImpl implements Analizer {
                 chromeDto.getSearchUrl() != null &&
                 chromeDto.getTimestamp() != null) {
 
-            ChromeManager.saveOrUpdateChromeDB(this.chromeDto);
+            DBManager.saveOrUpdate(this.chromeDto);
             Toast.makeText(context, "Stored chrome:\n" + this.chromeDto.toString(), Toast.LENGTH_LONG).show();
 
         }

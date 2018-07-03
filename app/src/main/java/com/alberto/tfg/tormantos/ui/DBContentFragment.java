@@ -15,12 +15,7 @@ import com.alberto.tfg.tormantos.dto.browsing.FirefoxDto;
 import com.alberto.tfg.tormantos.dto.comunication.GmailDto;
 import com.alberto.tfg.tormantos.dto.comunication.SmsDto;
 import com.alberto.tfg.tormantos.dto.messaging.WhatsappDto;
-import com.alberto.tfg.tormantos.manager.browsing.ChromeManager;
-import com.alberto.tfg.tormantos.manager.browsing.FirefoxManager;
-import com.alberto.tfg.tormantos.manager.communication.GmailManager;
-import com.alberto.tfg.tormantos.manager.communication.SmsManager;
-import com.alberto.tfg.tormantos.manager.messaging.WhatsappManager;
-import com.alberto.tfg.tormantos.manager.system.NotificationManager;
+import com.alberto.tfg.tormantos.manager.DBManager;
 import com.alberto.tfg.tormantos.utils.Strings;
 
 import butterknife.BindView;
@@ -60,31 +55,36 @@ public class DBContentFragment extends Fragment {
 
     private void loadDBContent(View view) {
 
+        ArrayAdapter adapter = null;
         if (this.contentDescription != null) {
             switch (this.contentDescription) {
                 case Strings.PACKAGE_WHATSAPP:
-                    dbListView.setAdapter(new ArrayAdapter<WhatsappDto>(this.getActivity(), android.R.layout.simple_list_item_1, WhatsappManager.getAllWhatsappModels()));
+                    adapter = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_list_item_1, DBManager.getAllObjects(WhatsappDto.class));
+                    //dbListView.setAdapter(new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_list_item_1, DBManager.getAllObjects(WhatsappDto.class)));
                     break;
                 case Strings.PACKAGE_GMAIL:
-                    dbListView.setAdapter(new ArrayAdapter<GmailDto>(this.getActivity(), android.R.layout.simple_list_item_1, GmailManager.getAllGmailModels()));
+                    adapter = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_list_item_1, DBManager.getAllObjects(GmailDto.class));
                     break;
                 case Strings.PACKAGE_SMS:
-                    dbListView.setAdapter(new ArrayAdapter<SmsDto>(this.getActivity(), android.R.layout.simple_list_item_1, SmsManager.getAllSmsModels()));
+                    adapter = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_list_item_1, DBManager.getAllObjects(SmsDto.class));
                     break;
                 case Strings.PACKAGE_FIREFOX:
-                    dbListView.setAdapter(new ArrayAdapter<FirefoxDto>(this.getActivity(), android.R.layout.simple_list_item_1, FirefoxManager.getAllFirefoxModels()));
+                    adapter = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_list_item_1, DBManager.getAllObjects(FirefoxDto.class));
                     break;
                 case Strings.PACKAGE_CHROME:
-                    dbListView.setAdapter(new ArrayAdapter<ChromeDto>(this.getActivity(), android.R.layout.simple_list_item_1, ChromeManager.getAllChromeModels()));
+                    adapter = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_list_item_1, DBManager.getAllObjects(ChromeDto.class));
                     break;
                 case Strings.CLASS_NOTIFICATION:
-                    dbListView.setAdapter(new ArrayAdapter<NotificationDto>(this.getActivity(), android.R.layout.simple_list_item_1, NotificationManager.getAllNotificationModels()));
+                    adapter = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_list_item_1, DBManager.getAllObjects(NotificationDto.class));
                     break;
                 default:
                     break;
             }
-        }
+            if(adapter != null){
+                dbListView.setAdapter(adapter);
+            }
 
+        }
     }
 
 

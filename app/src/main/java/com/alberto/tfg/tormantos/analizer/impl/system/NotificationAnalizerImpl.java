@@ -5,7 +5,7 @@ import android.widget.Toast;
 
 import com.alberto.tfg.tormantos.analizer.Analizer;
 import com.alberto.tfg.tormantos.dto.NotificationDto;
-import com.alberto.tfg.tormantos.manager.system.NotificationManager;
+import com.alberto.tfg.tormantos.manager.DBManager;
 import com.alberto.tfg.tormantos.sto.EventSto;
 import com.alberto.tfg.tormantos.utils.Helper;
 
@@ -52,7 +52,7 @@ public class NotificationAnalizerImpl implements Analizer{
         if(notificationDto != null &&
                 !"".equals(notificationDto.getNotificationContent()) &&
                 !"".equals(notificationDto.getSourcePackage())){
-            NotificationManager.saveOrUpdateNotificationDB(this.notificationDto);
+            DBManager.saveOrUpdate(this.notificationDto);
             Toast.makeText(context, "Stored whatsapp:\n" + this.notificationDto.toString(), Toast.LENGTH_LONG).show();
 
         }
