@@ -1,9 +1,9 @@
-package com.alberto.tfg.tormantos.analizer.impl.browsing;
+package com.alberto.tfg.tormantos.analyzer.impl.browsing;
 
 import android.content.Context;
 import android.widget.Toast;
 
-import com.alberto.tfg.tormantos.analizer.Analizer;
+import com.alberto.tfg.tormantos.analyzer.Analyzer;
 import com.alberto.tfg.tormantos.dto.browsing.FirefoxDto;
 import com.alberto.tfg.tormantos.manager.DBManager;
 import com.alberto.tfg.tormantos.sto.EventSto;
@@ -15,7 +15,7 @@ import java.util.Date;
 /**
  * Analizer implementation for Firefox Web Browser.
  */
-public class FirefoxAnalizerImpl implements Analizer {
+public class FirefoxAnalyzerImpl implements Analyzer {
 
     private static final String TAG = "FirefoxAnalizer";
 
@@ -25,7 +25,7 @@ public class FirefoxAnalizerImpl implements Analizer {
 
     private boolean confirmInput = false;
 
-    public FirefoxAnalizerImpl(Context context) {
+    public FirefoxAnalyzerImpl(Context context) {
         this.context = context;
     }
 
@@ -40,7 +40,7 @@ public class FirefoxAnalizerImpl implements Analizer {
                     firefoxDto = new FirefoxDto();
                     firefoxDto.setSearchUrl(Helper.getEventText(eventSto.getEvent()));
 
-                    if(confirmInput){
+                    if (confirmInput) {
                         firefoxDto.setTimestamp(eventSto.getCaptureInstant());
                         this.storeObjectInRealm();
                         confirmInput = false;
@@ -50,7 +50,7 @@ public class FirefoxAnalizerImpl implements Analizer {
             case Strings.WIDGET_FRAME: // A web shortcut has been clicked
                 if (!(Strings.KEY_FIREFOX_SEARCH.equals(Helper.getEventText(eventSto.getEvent())))
                         && !("".equals(Helper.getEventText(eventSto.getEvent())))) {
-                   confirmInput = true;
+                    confirmInput = true;
                 }
                 break;
             case Strings.WIDGET_LINEAR_LAYOUT: // // A bookmark is clicked

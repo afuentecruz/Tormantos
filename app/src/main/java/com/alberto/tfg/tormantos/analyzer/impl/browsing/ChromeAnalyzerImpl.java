@@ -1,22 +1,22 @@
-package com.alberto.tfg.tormantos.analizer.impl.browsing;
+package com.alberto.tfg.tormantos.analyzer.impl.browsing;
 
 import android.content.Context;
 import android.widget.Toast;
 
-import com.alberto.tfg.tormantos.analizer.Analizer;
+import com.alberto.tfg.tormantos.analyzer.Analyzer;
 import com.alberto.tfg.tormantos.dto.browsing.ChromeDto;
 import com.alberto.tfg.tormantos.manager.DBManager;
 import com.alberto.tfg.tormantos.sto.EventSto;
 import com.alberto.tfg.tormantos.utils.Helper;
 import com.alberto.tfg.tormantos.utils.Strings;
 
-public class ChromeAnalizerImpl implements Analizer {
+public class ChromeAnalyzerImpl implements Analyzer {
 
     private Context context;
 
     private ChromeDto chromeDto;
 
-    public ChromeAnalizerImpl(Context context) {
+    public ChromeAnalyzerImpl(Context context) {
         this.context = context;
     }
 

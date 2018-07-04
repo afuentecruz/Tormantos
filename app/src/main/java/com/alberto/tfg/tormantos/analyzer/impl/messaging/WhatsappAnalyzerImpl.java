@@ -1,9 +1,9 @@
-package com.alberto.tfg.tormantos.analizer.impl.messaging;
+package com.alberto.tfg.tormantos.analyzer.impl.messaging;
 
 import android.content.Context;
 import android.widget.Toast;
 
-import com.alberto.tfg.tormantos.analizer.Analizer;
+import com.alberto.tfg.tormantos.analyzer.Analyzer;
 import com.alberto.tfg.tormantos.dto.common.TimestampString;
 import com.alberto.tfg.tormantos.dto.messaging.WhatsappDto;
 import com.alberto.tfg.tormantos.manager.DBManager;
@@ -16,7 +16,7 @@ import java.util.Date;
 /**
  * Analizer implementation for Whatsapp
  */
-public class WhatsappAnalizerImpl implements Analizer {
+public class WhatsappAnalyzerImpl implements Analyzer {
 
     private static final String TAG = "WhatsappAnalizer";
     private Context context;
@@ -34,7 +34,7 @@ public class WhatsappAnalizerImpl implements Analizer {
     private WhatsappDto whatsappDto;
 
 
-    public WhatsappAnalizerImpl(Context context) {
+    public WhatsappAnalyzerImpl(Context context) {
         this.context = context;
         whatsappDto = null;
     }
@@ -66,7 +66,7 @@ public class WhatsappAnalizerImpl implements Analizer {
                 break;
             case Strings.WIDGET_RELATIVE_LAYOUT: //Clicked on a conversation
                 // Extract the contact name string
-                currentInterlocutor = this.getContactName(Helper.getEventText(eventSto.getEvent()));
+                currentInterlocutor = this.getInterlocutorName(Helper.getEventText(eventSto.getEvent()));
                 whatsappDto.setInterlocutor(currentInterlocutor);
 
                 break;
@@ -80,12 +80,12 @@ public class WhatsappAnalizerImpl implements Analizer {
     }
 
     /**
-     * getContactName, method that extracts the name of the person or group the user is writing on
+     * getInterlocutorName, method that extracts the name of the person or group the user is writing on
      *
      * @param eventText, accessibilityEvent text.
      * @return String contactName, the extracted name
      */
-    private String getContactName(String eventText) {
+    private String getInterlocutorName(String eventText) {
 
         String contactName = "";
         for (int i = 0; i < eventText.length(); i++) {

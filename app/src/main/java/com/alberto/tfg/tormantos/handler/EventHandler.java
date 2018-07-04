@@ -3,12 +3,12 @@ package com.alberto.tfg.tormantos.handler;
 import android.content.Context;
 import android.view.accessibility.AccessibilityEvent;
 
-import com.alberto.tfg.tormantos.analizer.impl.browsing.ChromeAnalizerImpl;
-import com.alberto.tfg.tormantos.analizer.impl.browsing.FirefoxAnalizerImpl;
-import com.alberto.tfg.tormantos.analizer.impl.communication.GmailAnalizerImpl;
-import com.alberto.tfg.tormantos.analizer.impl.communication.SmsAnalizerImpl;
-import com.alberto.tfg.tormantos.analizer.impl.messaging.WhatsappAnalizerImpl;
-import com.alberto.tfg.tormantos.analizer.impl.system.NotificationAnalizerImpl;
+import com.alberto.tfg.tormantos.analyzer.impl.browsing.ChromeAnalyzerImpl;
+import com.alberto.tfg.tormantos.analyzer.impl.browsing.FirefoxAnalyzerImpl;
+import com.alberto.tfg.tormantos.analyzer.impl.communication.GmailAnalyzerImpl;
+import com.alberto.tfg.tormantos.analyzer.impl.communication.SmsAnalyzerImpl;
+import com.alberto.tfg.tormantos.analyzer.impl.messaging.WhatsappAnalyzerImpl;
+import com.alberto.tfg.tormantos.analyzer.impl.system.NotificationAnalyzerImpl;
 import com.alberto.tfg.tormantos.sto.EventSto;
 import com.alberto.tfg.tormantos.utils.Helper;
 import com.alberto.tfg.tormantos.utils.Strings;
@@ -20,7 +20,7 @@ import java.util.Date;
  * The Handler component.
  * <p>
  * This class manages all the events captured by the accessibility service
- * Looks for her package name calls the corresponding analizer implementation.
+ * Looks for her package name calls the corresponding analyzer implementation.
  */
 public class EventHandler {
 
@@ -41,36 +41,36 @@ public class EventHandler {
     /**
      * General communication analizers
      */
-    private GmailAnalizerImpl gmailAnalizer;
-    private SmsAnalizerImpl smsAnalizer;
+    private GmailAnalyzerImpl gmailAnalizer;
+    private SmsAnalyzerImpl smsAnalizer;
 
     /**
      * Instant messaging analizers
      */
-    private WhatsappAnalizerImpl whatsappAnalizer;
+    private WhatsappAnalyzerImpl whatsappAnalizer;
 
     /**
      * Web browsing analizers
      */
-    private FirefoxAnalizerImpl firefoxAnalizer;
-    private ChromeAnalizerImpl chromeAnalizer;
+    private FirefoxAnalyzerImpl firefoxAnalizer;
+    private ChromeAnalyzerImpl chromeAnalizer;
 
     /**
      * System events analizers
      */
-    private NotificationAnalizerImpl notificationAnalizer;
+    private NotificationAnalyzerImpl notificationAnalizer;
 
 
     public EventHandler(Context context) {
         this.context = context;
         currentPackage = "";
 
-        whatsappAnalizer = new WhatsappAnalizerImpl(context);
-        gmailAnalizer = new GmailAnalizerImpl(context);
-        smsAnalizer = new SmsAnalizerImpl(context);
-        firefoxAnalizer = new FirefoxAnalizerImpl(context);
-        chromeAnalizer = new ChromeAnalizerImpl(context);
-        notificationAnalizer = new NotificationAnalizerImpl(context);
+        whatsappAnalizer = new WhatsappAnalyzerImpl(context);
+        gmailAnalizer = new GmailAnalyzerImpl(context);
+        smsAnalizer = new SmsAnalyzerImpl(context);
+        firefoxAnalizer = new FirefoxAnalyzerImpl(context);
+        chromeAnalizer = new ChromeAnalyzerImpl(context);
+        notificationAnalizer = new NotificationAnalyzerImpl(context);
     }
 
     public void handleEvent(AccessibilityEvent event, Date timestamp) {
@@ -139,7 +139,7 @@ public class EventHandler {
 
     /**
      * Handles a keyboard event in order to
-     * confirm the user input in the correspond app analizer
+     * confirm the user input in the correspond app analyzer
      *
      * @param eventSto the EventSto.
      */
@@ -198,7 +198,7 @@ public class EventHandler {
 
     /**
      * Checks if the app changed suddenly (for example, navigated to home from any other activity)
-     * and try to store any previous content of the corresponding analizer.
+     * and try to store any previous content of the corresponding analyzer.
      *
      * @param eventSto the EventSto.
      */

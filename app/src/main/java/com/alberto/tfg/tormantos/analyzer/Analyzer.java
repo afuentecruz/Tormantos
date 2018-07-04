@@ -1,15 +1,15 @@
-package com.alberto.tfg.tormantos.analizer;
+package com.alberto.tfg.tormantos.analyzer;
 
 
 import com.alberto.tfg.tormantos.sto.EventSto;
 
 /**
- * Analizer general interface which each app analizer implements and modifies
+ * Analyzer general interface which each app analyzer implements and modifies
  */
-public interface Analizer {
+public interface Analyzer {
 
     /**
-     * Main method of the analizer, implements
+     * Main method of the analyzer, implements
      * the required logic to extract the
      * app context and user information
      *

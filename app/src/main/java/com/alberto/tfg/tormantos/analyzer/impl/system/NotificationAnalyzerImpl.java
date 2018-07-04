@@ -1,9 +1,9 @@
-package com.alberto.tfg.tormantos.analizer.impl.system;
+package com.alberto.tfg.tormantos.analyzer.impl.system;
 
 import android.content.Context;
 import android.widget.Toast;
 
-import com.alberto.tfg.tormantos.analizer.Analizer;
+import com.alberto.tfg.tormantos.analyzer.Analyzer;
 import com.alberto.tfg.tormantos.dto.NotificationDto;
 import com.alberto.tfg.tormantos.manager.DBManager;
 import com.alberto.tfg.tormantos.sto.EventSto;
@@ -12,7 +12,7 @@ import com.alberto.tfg.tormantos.utils.Helper;
 /**
  * Analizer implementation for Android System Notifications.
  */
-public class NotificationAnalizerImpl implements Analizer{
+public class NotificationAnalyzerImpl implements Analyzer{
 
     private static final String TAG = "NotificationAnalizer";
 
@@ -20,7 +20,7 @@ public class NotificationAnalizerImpl implements Analizer{
 
     private Context context;
 
-    public NotificationAnalizerImpl(Context context){
+    public NotificationAnalyzerImpl(Context context){
         this.context = context;
     }
 

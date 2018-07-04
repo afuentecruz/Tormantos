@@ -1,10 +1,10 @@
-package com.alberto.tfg.tormantos.analizer.impl.communication;
+package com.alberto.tfg.tormantos.analyzer.impl.communication;
 
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.alberto.tfg.tormantos.analizer.Analizer;
+import com.alberto.tfg.tormantos.analyzer.Analyzer;
 import com.alberto.tfg.tormantos.dto.comunication.SmsDto;
 import com.alberto.tfg.tormantos.manager.DBManager;
 import com.alberto.tfg.tormantos.sto.EventSto;
@@ -14,7 +14,7 @@ import com.alberto.tfg.tormantos.utils.Strings;
 /**
  * Analizer implementation for sms capture
  */
-public class SmsAnalizerImpl implements Analizer {
+public class SmsAnalyzerImpl implements Analyzer {
 
     private static final String TAG = "SmsAnalizer";
     private Context context;
@@ -28,7 +28,7 @@ public class SmsAnalizerImpl implements Analizer {
      */
     private String currentContactName = "";
 
-    public SmsAnalizerImpl(Context context) {
+    public SmsAnalyzerImpl(Context context) {
         this.context = context;
     }
 

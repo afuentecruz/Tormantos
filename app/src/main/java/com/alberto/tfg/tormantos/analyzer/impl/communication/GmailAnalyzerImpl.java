@@ -1,11 +1,11 @@
-package com.alberto.tfg.tormantos.analizer.impl.communication;
+package com.alberto.tfg.tormantos.analyzer.impl.communication;
 
 import android.content.Context;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.Toast;
 
-import com.alberto.tfg.tormantos.analizer.Analizer;
+import com.alberto.tfg.tormantos.analyzer.Analyzer;
 import com.alberto.tfg.tormantos.dto.comunication.GmailDto;
 import com.alberto.tfg.tormantos.manager.DBManager;
 import com.alberto.tfg.tormantos.sto.EventSto;
@@ -17,7 +17,7 @@ import io.realm.RealmList;
 /**
  * Analizer implementation for Gmail capture.
  */
-public class GmailAnalizerImpl implements Analizer {
+public class GmailAnalyzerImpl implements Analyzer {
 
     private static final String TAG = "GmailAnalizer";
     private Context context;
@@ -27,7 +27,7 @@ public class GmailAnalizerImpl implements Analizer {
      */
     private GmailDto gmailDto;
 
-    public GmailAnalizerImpl(Context context) {
+    public GmailAnalyzerImpl(Context context) {
         this.context = context;
         gmailDto = new GmailDto();
     }
