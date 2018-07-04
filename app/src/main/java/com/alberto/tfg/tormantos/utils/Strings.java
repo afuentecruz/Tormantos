@@ -6,7 +6,9 @@ package com.alberto.tfg.tormantos.utils;
  */
 public class Strings {
 
-    /** Apps package name keys */
+    /**
+     * Apps package name keys
+     */
     // Communications
     public static final String PACKAGE_GMAIL = "com.google.android.gm";
     public static final String PACKAGE_SMS = "com.google.android.apps.messaging";
@@ -22,31 +24,50 @@ public class Strings {
     public static final String PACKAGE_SHORTCUT = "is.shortcut";
 
 
-    /** Android softkeyboard keys */
+    /**
+     * Android softkeyboard keys
+     */                  //Mostrando teclado español (España) (QWERTY (Ñ))
     public static final String KEY_KEYBOARD_SHOW_MSG = "Mostrando teclado español (España) (QWERTY (Ñ))";
-    public static final String KEY_KEYBOARD_HIDE_MSG ="El teclado español (España) (QWERTY (Ñ)) está oculto";
+    public static final String KEY_KEYBOARD_HIDE_MSG = "El teclado español (España) (QWERTY (Ñ)) está oculto";
     public static final String KEY_KEYBOARD_WRITTE_MSG = "Escribir mensaje";
+    public static final String KEY_KEYBOARD_ALTERNATIVES_REJECTED = "Se han rechazado las alternativas";
+    public static final String KEY_KEYBOARD_ALTERNATIVES_AVAILABLE = "Hay alternativas disponibles";
+    public static final String KEY_KEYBOARD_SHOW_SYMBOLS = "Mostrando Teclado de símbolos";
 
 
-    /** WhatsApp keys */
+    /**
+     * WhatsApp keys
+     */
     public static final String KEY_WHATSAPP = "WhatsApp";
 
-    /** Gmail Keys */
+    /**
+     * Gmail Keys
+     */
     public static final String KEY_GMAIL_SENDED = "Enviando mensaje…";
 
-    /** Sms keys */
+    /**
+     * Sms keys
+     */
     public static final String KEY_SMS_CONTACT_ADDED = "ya se ha añadido, ahora estás editándolo";
 
-    /** Firefox keys */
-    public static final String KEY_FIREFOX_SEARCH  = "Término de búsqueda o dirección";
+    /**
+     * Firefox keys
+     */
+    public static final String KEY_FIREFOX_SEARCH = "Término de búsqueda o dirección";
 
-    /** Sms UI class */
+    /**
+     * Sms UI class
+     */
     public static final String CLASS_SMS_CONVERSATION = "com.google.android.apps.messaging.ui.conversation.ConversationActivity";
 
-    /** Whatsapp UI class */
+    /**
+     * Whatsapp UI class
+     */
     public static final String CLASS_HOMEACTIVITY = "com.whatsapp.HomeActivity";
 
-    /** General android ui elements */
+    /**
+     * General android ui elements
+     */
     public static final String CLASS_NOTIFICATION = "android.app.Notification";
     public static final String WIDGET_FRAME = "android.widget.FrameLayout";
     public static final String WIDGET_RELATIVE_LAYOUT = "android.widget.RelativeLayout";

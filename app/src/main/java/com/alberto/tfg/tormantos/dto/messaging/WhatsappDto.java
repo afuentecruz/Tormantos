@@ -80,15 +80,6 @@ public class WhatsappDto extends RealmObject {
 
     @Override
     public String toString() {
-        /*
-         return "WhatsappDB{" + "\n" +
-                '\t' + "id: " + id + "\n" +
-                '\t' + "interlocutor: " + interlocutor + "\n" +
-                '\t' + "timestamp Start: " + timestampStart + "\n" +
-                '\t' + "timestamp End: " + timestampEnd + "\n" +
-                '\t' + "textList: " +  Arrays.toString(textList.toArray()) +
-                '}' + "\n";
-         */
         return "WhatsappDto{" + "\n" +
                 "\t" + "interlocutor: " + interlocutor + "\n" +
                 "\t" + "start: " + Helper.formatDate(startTimestamp) + "\n" +

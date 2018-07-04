@@ -71,6 +71,11 @@ public class WhatsappAnalyzerImpl implements Analyzer {
 
                 break;
             case Strings.WIDGET_EDITTEXT: // Writing
+
+                if (Helper.getEventText(eventSto.getEvent()) != null &&
+                        Helper.getEventText(eventSto.getEvent()).length() < this.currentMessage.length() - 1) {
+                    confirmKeyboardInput(eventSto.getCaptureInstant());
+                }
                 this.currentMessage = Helper.getEventText(eventSto.getEvent());
 
                 break;
@@ -102,13 +107,23 @@ public class WhatsappAnalyzerImpl implements Analyzer {
      * @param sendTimestamp Date
      */
     public void confirmKeyboardInput(Date sendTimestamp) {
-
-        if (this.whatsappDto == null || this.currentMessage == null || this.currentMessage.isEmpty()
+//null
+        if (this.whatsappDto == null || this.currentMessage == null || ("".equals(this.currentMessage))
                 || this.currentMessage.equals(Strings.KEY_KEYBOARD_WRITTE_MSG))
             return;
 
         TimestampString ts = new TimestampString(this.currentMessage, sendTimestamp);
-        this.whatsappDto.getTextList().add(ts);
+        if (!whatsappDto.getTextList().isEmpty()) {
+
+            // -- check if the existing msg is not just the a replica
+            if (!whatsappDto.getTextList().get(0).getText().equals(currentMessage)) {
+                this.whatsappDto.getTextList().add(ts);
+            }
+
+        } else { // -- if textList is empty, just add it
+            this.whatsappDto.getTextList().add(ts);
+        }
+
     }
 
     /**
@@ -132,7 +147,8 @@ public class WhatsappAnalyzerImpl implements Analyzer {
      * Stores the WhatsappDto into RealmDB.
      */
     public void storeObjectInRealm() {
-        if (this.whatsappDto != null && this.whatsappDto.getInterlocutor() != null) {
+        if (this.whatsappDto != null && this.whatsappDto.getInterlocutor() != null
+                && this.currentMessage != null) {
             DBManager.saveOrUpdate(this.whatsappDto);
             Toast.makeText(context, "Stored whatsapp:\n" + this.whatsappDto.toString(), Toast.LENGTH_LONG).show();
 

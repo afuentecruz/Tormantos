@@ -144,7 +144,10 @@ public class EventHandler {
      * @param eventSto the EventSto.
      */
     private void handleKeyboardEvent(EventSto eventSto) {
-        if (Helper.getEventText(eventSto.getEvent()).equals(Strings.KEY_KEYBOARD_SHOW_MSG)) {
+        if (Helper.getEventText(eventSto.getEvent()).equals(Strings.KEY_KEYBOARD_SHOW_MSG)
+                && !Helper.getEventText(eventSto.getEvent()).equals(Strings.KEY_KEYBOARD_ALTERNATIVES_REJECTED)
+                && !Helper.getEventText(eventSto.getEvent()).equals(Strings.KEY_KEYBOARD_ALTERNATIVES_AVAILABLE)
+                && !Helper.getEventText(eventSto.getEvent()).equals(Strings.KEY_KEYBOARD_SHOW_SYMBOLS )) {
             handleShowKeyboard(eventSto);
         } else if (Helper.getEventText(eventSto.getEvent()).equals(Strings.KEY_KEYBOARD_HIDE_MSG)) {
             handleHideKeyboard(eventSto);
@@ -196,24 +199,24 @@ public class EventHandler {
         }
     }
 
-    /**
-     * Checks if the app changed suddenly (for example, navigated to home from any other activity)
-     * and try to store any previous content of the corresponding analyzer.
-     *
-     * @param eventSto the EventSto.
-     */
-    private void commitAnalyzerData(EventSto eventSto) {
-        if (!eventSto.getPackageName().equals(Strings.PACKAGE_KEYBOARD)
-                && !eventSto.getPackageName().equals(this.currentPackage)) {
-            switch (this.currentPackage) {
-                case Strings.PACKAGE_WHATSAPP:
-                    whatsappAnalyzer.checkRemainingData(eventSto);
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
+//    /**
+//     * Checks if the app changed suddenly (for example, navigated to home from any other activity)
+//     * and try to store any previous content of the corresponding analyzer.
+//     *
+//     * @param eventSto the EventSto.
+//     */
+//    private void commitAnalyzerData(EventSto eventSto) {
+//        if (!eventSto.getPackageName().equals(Strings.PACKAGE_KEYBOARD)
+//                && !eventSto.getPackageName().equals(this.currentPackage)) {
+//            switch (this.currentPackage) {
+//                case Strings.PACKAGE_WHATSAPP:
+//                    whatsappAnalyzer.checkRemainingData(eventSto);
+//                    break;
+//                default:
+//                    break;
+//            }
+//        }
+//    }
 
     /**
      * Checks the notification content in order to extract any
