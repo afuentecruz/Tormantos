@@ -15,11 +15,11 @@ import com.alberto.tfg.tormantos.utils.Strings;
 import io.realm.RealmList;
 
 /**
- * Analizer implementation for Gmail capture.
+ * Analyzer implementation for Gmail capture.
  */
 public class GmailAnalyzerImpl implements Analyzer {
 
-    private static final String TAG = "GmailAnalizer";
+    private static final String TAG = "GmailAnalyzer";
     private Context context;
 
     /**

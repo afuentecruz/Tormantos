@@ -14,11 +14,11 @@ import com.alberto.tfg.tormantos.utils.Strings;
 import java.util.Date;
 
 /**
- * Analizer implementation for Whatsapp
+ * Analyzer implementation for Whatsapp
  */
 public class WhatsappAnalyzerImpl implements Analyzer {
 
-    private static final String TAG = "WhatsappAnalizer";
+    private static final String TAG = "WhatsappAnalyzer";
     private Context context;
     /**
      * The message that the user is writting

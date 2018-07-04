@@ -13,11 +13,11 @@ import com.alberto.tfg.tormantos.utils.Strings;
 import java.util.Date;
 
 /**
- * Analizer implementation for Firefox Web Browser.
+ * Analyzer implementation for Firefox Web Browser.
  */
 public class FirefoxAnalyzerImpl implements Analyzer {
 
-    private static final String TAG = "FirefoxAnalizer";
+    private static final String TAG = "FirefoxAnalyzer";
 
     private Context context;
 

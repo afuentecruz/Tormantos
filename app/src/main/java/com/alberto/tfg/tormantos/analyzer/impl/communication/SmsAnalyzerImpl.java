@@ -12,11 +12,11 @@ import com.alberto.tfg.tormantos.utils.Helper;
 import com.alberto.tfg.tormantos.utils.Strings;
 
 /**
- * Analizer implementation for sms capture
+ * Analyzer implementation for sms capture
  */
 public class SmsAnalyzerImpl implements Analyzer {
 
-    private static final String TAG = "SmsAnalizer";
+    private static final String TAG = "SmsAnalyzer";
     private Context context;
     /**
      * SmsDto object that stores the user information

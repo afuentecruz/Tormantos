@@ -10,11 +10,11 @@ import com.alberto.tfg.tormantos.sto.EventSto;
 import com.alberto.tfg.tormantos.utils.Helper;
 
 /**
- * Analizer implementation for Android System Notifications.
+ * Analyzer implementation for Android System Notifications.
  */
 public class NotificationAnalyzerImpl implements Analyzer{
 
-    private static final String TAG = "NotificationAnalizer";
+    private static final String TAG = "NotificationAnalyzer";
 
     private NotificationDto notificationDto;
 

