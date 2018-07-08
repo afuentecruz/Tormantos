@@ -37,7 +37,6 @@ public class SmsAnalyzerImpl implements Analyzer {
         Helper.log(eventSto);
 
 
-
         switch (eventSto.getClassName()) {
             case Strings.CLASS_SMS_CONVERSATION:
 
@@ -83,7 +82,7 @@ public class SmsAnalyzerImpl implements Analyzer {
      */
     public void storeObjectInRealm() {
 
-        if("".equals(this.smsDto.getContent()) || this.smsDto.getContent() == null)
+        if ("".equals(this.smsDto.getContent()) || this.smsDto.getContent() == null)
             return;
 
         if (this.smsDto.getReceivers().size() == 0) {

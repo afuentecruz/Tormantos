@@ -5,6 +5,7 @@ import android.view.accessibility.AccessibilityEvent;
 
 import com.alberto.tfg.tormantos.analyzer.impl.browsing.ChromeAnalyzerImpl;
 import com.alberto.tfg.tormantos.analyzer.impl.browsing.FirefoxAnalyzerImpl;
+import com.alberto.tfg.tormantos.analyzer.impl.communication.DialAnalyzerImpl;
 import com.alberto.tfg.tormantos.analyzer.impl.communication.GmailAnalyzerImpl;
 import com.alberto.tfg.tormantos.analyzer.impl.communication.SmsAnalyzerImpl;
 import com.alberto.tfg.tormantos.analyzer.impl.messaging.WhatsappAnalyzerImpl;
@@ -44,6 +45,7 @@ public class EventHandler {
      */
     private GmailAnalyzerImpl gmailAnalyzer;
     private SmsAnalyzerImpl smsAnalyzer;
+    private DialAnalyzerImpl dialAnalyzer;
 
     /**
      * Instant messaging analyzers
@@ -71,11 +73,19 @@ public class EventHandler {
         this.context = context;
         currentPackage = "";
 
-        whatsappAnalyzer = new WhatsappAnalyzerImpl(context);
+        // -- communication analyzers
+        dialAnalyzer = new DialAnalyzerImpl(context);
         gmailAnalyzer = new GmailAnalyzerImpl(context);
         smsAnalyzer = new SmsAnalyzerImpl(context);
+
+        // -- instant messaging analyzers
+        whatsappAnalyzer = new WhatsappAnalyzerImpl(context);
+
+        // -- Browsing analyzers
         firefoxAnalyzer = new FirefoxAnalyzerImpl(context);
         chromeAnalyzer = new ChromeAnalyzerImpl(context);
+
+        // -- System analyzers
         notificationAnalyzer = new NotificationAnalyzerImpl(context);
         generalAppAnalyzer = new GeneralAppAnalyzerImpl(context);
     }
@@ -128,6 +138,9 @@ public class EventHandler {
             case Strings.PACKAGE_SMS:
                 smsAnalyzer.compute(eventSto);
                 break;
+            case Strings.PACKAGE_DIALER:
+                dialAnalyzer.compute(eventSto);
+                break;
 
             // Instant messaging cases
             case Strings.PACKAGE_WHATSAPP:
@@ -146,7 +159,7 @@ public class EventHandler {
             case Strings.PACKAGE_FACEBOOK:
                 break;
 
-                // Generals cases
+            // Generals cases
             case Strings.PACKAGE_KEYBOARD: // Keyboard displayed event
                 handleKeyboardEvent(eventSto);
                 break;

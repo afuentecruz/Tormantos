@@ -12,6 +12,7 @@ public class Strings {
     // Communications
     public static final String PACKAGE_GMAIL = "com.google.android.gm";
     public static final String PACKAGE_SMS = "com.google.android.apps.messaging";
+    public static final String PACKAGE_DIALER = "com.google.android.dialer";
     // Messaging
     public static final String PACKAGE_WHATSAPP = "com.whatsapp";
     public static final String PACKAGE_TELEGRAM = "org.telegram.messenger";
@@ -41,6 +42,13 @@ public class Strings {
      * WhatsApp keys
      */
     public static final String KEY_WHATSAPP = "WhatsApp";
+
+    /**
+     * Dial keys
+     */
+    public static final String KEY_DIAL_END = "Finalizar llamada";
+    public static final String KEY_DIAL_QUICK_CONTACT = "Contacto rápido de ";
+    public static final String KEY_DIAL_CALL_TO = "Llamar a ";
 
     /**
      * Gmail Keys
@@ -86,4 +94,6 @@ public class Strings {
     public static final String WIDGET_VIEW_VIEW = "android.view.View";
     public static final String WIDGET_LINEAR_LAYOUT = "android.widget.LinearLayout";
     public static final String VIEW_VIEWGROUP = "android.view.ViewGroup";
+    public static final String WIDGET_IMAGEVIEW = "android.widget.ImageView";
+    public static final String WIDGET_QUICKCONTACTBADGE = "android.widget.QuickContactBadge";
 }

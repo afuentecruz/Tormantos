@@ -36,6 +36,7 @@ public class LocationDto extends RealmObject {
     }
 
     public LocationDto(Double latitude, Double longitude, Date timestamp) {
+        this.id = UUID.randomUUID().toString(); //Randomized id.
         this.latitude = latitude;
         this.longitude = longitude;
         this.timestamp = timestamp;

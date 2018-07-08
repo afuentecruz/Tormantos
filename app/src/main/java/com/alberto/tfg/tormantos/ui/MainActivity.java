@@ -192,9 +192,7 @@ public class MainActivity extends AppCompatActivity
 
         if (accessibilityEnabled == 1) {
             return true;
-        } /*else {
-
-        }*/
+        }
         return false;
     }
 
