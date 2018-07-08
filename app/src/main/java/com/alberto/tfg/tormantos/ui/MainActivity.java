@@ -3,11 +3,9 @@ package com.alberto.tfg.tormantos.ui;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.NavigationView;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -16,12 +14,21 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alberto.tfg.tormantos.R;
+import com.alberto.tfg.tormantos.service.listener.SensorListenerService;
 import com.alberto.tfg.tormantos.utils.Strings;
+import com.intentfilter.androidpermissions.PermissionManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+import static java.util.Collections.singleton;
 
 /**
  * Main Activity controller.
@@ -45,45 +52,22 @@ public class MainActivity extends AppCompatActivity
 
     @BindView(R.id.nav_view)
     NavigationView navigationView;
-//
-//    @BindView(R.id.mainButton)
-//    FloatingActionButton mainFloatingButton;
 
+    @BindView(R.id.TextViewTormantosHome)
+    TextView TextViewAndroidUUID;
 
-    /**
-     * Setup the configuration of view elements
-     */
-    private void setupElements() {
+    @BindView(R.id.TextViewAccess)
+    TextView textViewAccess;
 
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        navigationView.setNavigationItemSelectedListener(this);
-    }
+    @BindView(R.id.follow_me_to_accessibility)
+    Button launchAccessibilitySettingsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setupElements();
-        this.checkForAppPermissions();
-    }
-
-    private void checkForAppPermissions() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BIND_ACCESSIBILITY_SERVICE)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            startActivityForResult(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS), 1);
-
-        } else {
-            System.out.println("esto dice que guay");
-        }
+        requestPermissions();
     }
 
     @Override
@@ -146,11 +130,14 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.notifications) {
             // Show the notifications related stored content
             dbContentFragment.setContentDescription(Strings.CLASS_NOTIFICATION);
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.location) {
+            // Show the location related stored content
+            dbContentFragment.setContentDescription(Strings.SERVICE_LOCATION);
+
         }
 
         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.main_content, dbContentFragment, DBContentFragment.TAG).commit();
+        fragmentTransaction.add(R.id.main_content, dbContentFragment, DBContentFragment.TAG).commit();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -159,11 +146,29 @@ public class MainActivity extends AppCompatActivity
     /**
      * Widgets events
      */
-//
-//    @OnClick(R.id.mainButton)
-//    public void doThing(View view) {
-//        startActivityForResult(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS), 1);
-//    }
+    @OnClick(R.id.follow_me_to_accessibility)
+    public void launchAccessibilitySettings(View view) {
+        startActivityForResult(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS), 1);
+    }
+
+
+    /**
+     * Setup the configuration of view elements
+     */
+    private void setupElements() {
+
+        setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        navigationView.setNavigationItemSelectedListener(this);
+
+        loadSmartphoneData();
+    }
 
     /**
      * Checks if the accessibility service 'MonitorService' is enabled in the
@@ -186,13 +191,48 @@ public class MainActivity extends AppCompatActivity
         }
 
         if (accessibilityEnabled == 1) {
-            Log.d(TAG, "Accessibility service is enabled");
-
             return true;
-        } else {
-            Log.d(TAG, "Accessibility service is DISABLED");
-        }
+        } /*else {
 
+        }*/
         return false;
     }
+
+    private void requestPermissions() {
+
+        final Context context = this.getApplicationContext();
+        PermissionManager permissionManager = PermissionManager.getInstance(context);
+        permissionManager.checkPermissions(singleton(Manifest.permission.ACCESS_FINE_LOCATION), new PermissionManager.PermissionRequestListener() {
+            @Override
+            public void onPermissionGranted() {
+                startService(new Intent(context, SensorListenerService.class));
+                Toast.makeText(context, "Permissions Granted", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onPermissionDenied() {
+                Toast.makeText(context, "Permissions Denied", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        if(isAccessibilitySettingsOn(context)){
+            this.textViewAccess.setVisibility(View.INVISIBLE);
+            this.launchAccessibilitySettingsButton.setVisibility(View.INVISIBLE);
+            Log.d(TAG, "Accessibility service is enabled");
+        }else{
+            this.textViewAccess.setVisibility(View.VISIBLE);
+            this.launchAccessibilitySettingsButton.setVisibility(View.VISIBLE);
+            Log.d(TAG, "Accessibility service is DISABLED");
+        }
+    }
+
+    private void loadSmartphoneData() {
+
+        // --load the android uniqued identifier
+        // String androidUUID= Settings.Secure.getString(this.getApplicationContext().getContentResolver(),
+        //Settings.Secure.ANDROID_ID);
+        // this.androidUUID.setText(androidUUID);
+    }
+
+
 }

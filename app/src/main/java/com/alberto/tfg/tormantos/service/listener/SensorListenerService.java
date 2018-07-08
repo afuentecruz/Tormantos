@@ -9,12 +9,17 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 
-public class LocationListenerService extends Service {
-    
-    private static final String TAG = "LocationListenerService";
-    
+import com.alberto.tfg.tormantos.dto.system.LocationDto;
+import com.alberto.tfg.tormantos.manager.DBManager;
+
+import java.util.Date;
+
+public class SensorListenerService extends Service {
+
+    private static final String TAG = "SensorListenerService";
+
     private LocationManager locationManager = null;
-    
+
     private static final int LOCATION_INTERVAL = 1000;
     private static final float LOCATION_DISTANCE = 10f;
 
@@ -32,24 +37,21 @@ public class LocationListenerService extends Service {
         public void onLocationChanged(Location location) {
             Log.e(TAG, "onLocationChanged: " + location);
             lastLocation.set(location);
+            LocationDto locationDto = new LocationDto(lastLocation.getLatitude(), lastLocation.getLongitude(),
+                    new Date());
+            DBManager.saveOrUpdate(locationDto);
             Log.e(TAG, "*!*!* location change: " + location);
 
         }
 
         @Override
-        public void onProviderDisabled(String provider) {
-            Log.e(TAG, "onProviderDisabled: " + provider);
-        }
+        public void onStatusChanged(String provider, int status, Bundle extras) { }
 
         @Override
-        public void onProviderEnabled(String provider) {
-            Log.e(TAG, "onProviderEnabled: " + provider);
-        }
+        public void onProviderEnabled(String provider) { }
 
         @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-            Log.e(TAG, "onStatusChanged: " + provider);
-        }
+        public void onProviderDisabled(String provider) { }
     }
 
     LocationListener[] mLocationListeners = new LocationListener[]{

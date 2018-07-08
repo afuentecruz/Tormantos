@@ -4,7 +4,7 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.alberto.tfg.tormantos.analyzer.Analyzer;
-import com.alberto.tfg.tormantos.dto.NotificationDto;
+import com.alberto.tfg.tormantos.dto.system.NotificationDto;
 import com.alberto.tfg.tormantos.manager.DBManager;
 import com.alberto.tfg.tormantos.sto.EventSto;
 import com.alberto.tfg.tormantos.utils.Helper;

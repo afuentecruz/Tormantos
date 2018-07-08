@@ -72,7 +72,7 @@ public class WhatsappAnalyzerImpl implements Analyzer {
                 break;
             case Strings.WIDGET_EDITTEXT: // Writing
 
-                if (Helper.getEventText(eventSto.getEvent()) != null &&
+                if (this.currentMessage != null &&
                         Helper.getEventText(eventSto.getEvent()).length() < this.currentMessage.length() - 1) {
                     confirmKeyboardInput(eventSto.getCaptureInstant());
                 }
@@ -107,7 +107,7 @@ public class WhatsappAnalyzerImpl implements Analyzer {
      * @param sendTimestamp Date
      */
     public void confirmKeyboardInput(Date sendTimestamp) {
-//null
+
         if (this.whatsappDto == null || this.currentMessage == null || ("".equals(this.currentMessage))
                 || this.currentMessage.equals(Strings.KEY_KEYBOARD_WRITTE_MSG))
             return;
@@ -116,7 +116,7 @@ public class WhatsappAnalyzerImpl implements Analyzer {
         if (!whatsappDto.getTextList().isEmpty()) {
 
             // -- check if the existing msg is not just the a replica
-            if (!whatsappDto.getTextList().get(0).getText().equals(currentMessage)) {
+            if (!whatsappDto.getTextList().last().getText().equals(currentMessage)) {
                 this.whatsappDto.getTextList().add(ts);
             }
 
@@ -133,12 +133,13 @@ public class WhatsappAnalyzerImpl implements Analyzer {
      * @param eventSto the EventSto.
      */
     public void checkRemainingData(EventSto eventSto) {
-        if (this.whatsappDto.getTextList() != null &&
-                this.whatsappDto.getStartTimestamp() != null &&
-                this.whatsappDto.getInterlocutor() != null) {
+        if (this.whatsappDto != null) {
+            if (!"".equals(this.whatsappDto.getInterlocutor()) &&
+                    this.whatsappDto.getStartTimestamp() != null) {
 
-            this.whatsappDto.setEndTimestamp(eventSto.getCaptureInstant());
-            storeObjectInRealm();
+                this.whatsappDto.setEndTimestamp(eventSto.getCaptureInstant());
+                storeObjectInRealm();
+            }
         }
     }
 

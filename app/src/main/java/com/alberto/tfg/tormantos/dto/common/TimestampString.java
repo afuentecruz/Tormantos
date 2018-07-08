@@ -11,8 +11,10 @@ import io.realm.RealmObject;
  */
 public class TimestampString extends RealmObject {
 
+    /** String with the content of the text */
     private String text;
 
+    /** Timestamp describing the exact moment when the text was written */
     private Date timestamp;
 
     public TimestampString(){}

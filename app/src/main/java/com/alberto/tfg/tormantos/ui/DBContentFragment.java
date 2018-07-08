@@ -9,12 +9,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.alberto.tfg.tormantos.R;
-import com.alberto.tfg.tormantos.dto.NotificationDto;
 import com.alberto.tfg.tormantos.dto.browsing.ChromeDto;
 import com.alberto.tfg.tormantos.dto.browsing.FirefoxDto;
 import com.alberto.tfg.tormantos.dto.comunication.GmailDto;
 import com.alberto.tfg.tormantos.dto.comunication.SmsDto;
 import com.alberto.tfg.tormantos.dto.messaging.WhatsappDto;
+import com.alberto.tfg.tormantos.dto.system.LocationDto;
+import com.alberto.tfg.tormantos.dto.system.NotificationDto;
 import com.alberto.tfg.tormantos.manager.DBManager;
 import com.alberto.tfg.tormantos.utils.Strings;
 
@@ -77,6 +78,8 @@ public class DBContentFragment extends Fragment {
                 case Strings.CLASS_NOTIFICATION:
                     adapter = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_list_item_1, DBManager.getAllObjects(NotificationDto.class));
                     break;
+                case Strings.SERVICE_LOCATION:
+                    adapter = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_list_item_1, DBManager.getAllObjects(LocationDto.class));
                 default:
                     break;
             }

@@ -1,12 +1,10 @@
 package com.alberto.tfg.tormantos.service;
 
-import android.content.Intent;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.Toast;
 
 import com.alberto.tfg.tormantos.handler.EventHandler;
-import com.alberto.tfg.tormantos.service.listener.LocationListenerService;
 
 import java.util.Date;
 
@@ -33,11 +31,10 @@ public class AccessibilityServiceImpl extends android.accessibilityservice.Acces
         super.onCreate();
         Log.d(TAG, "onCreate");
 
+
         // -- start the accessibility events handler
         this.eventHandler = new EventHandler(this.getApplicationContext());
 
-        // -- start the gps location listener service
-        startService(new Intent(this.getApplicationContext(), LocationListenerService.class));
     }
 
     @Override

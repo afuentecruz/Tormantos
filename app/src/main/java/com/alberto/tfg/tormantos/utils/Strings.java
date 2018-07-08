@@ -18,11 +18,13 @@ public class Strings {
     // Web browsing
     public static final String PACKAGE_FIREFOX = "org.mozilla.firefox";
     public static final String PACKAGE_CHROME = "com.android.chrome";
+    // Social
+    public static final String PACKAGE_FACEBOOK = "com.facebook.katana";
 
     // General
     public static final String PACKAGE_KEYBOARD = "com.google.android.inputmethod.latin";
     public static final String PACKAGE_SHORTCUT = "is.shortcut";
-
+    public static final String PACKAGE_TORMANTOS = "com.alberto.tfg.tormantos";
 
     /**
      * Android softkeyboard keys
@@ -66,9 +68,14 @@ public class Strings {
     public static final String CLASS_HOMEACTIVITY = "com.whatsapp.HomeActivity";
 
     /**
-     * General android ui elements
+     * System values
      */
     public static final String CLASS_NOTIFICATION = "android.app.Notification";
+    public static final String SERVICE_LOCATION = "service.location";
+
+    /**
+     * General android ui elements
+     */
     public static final String WIDGET_FRAME = "android.widget.FrameLayout";
     public static final String WIDGET_RELATIVE_LAYOUT = "android.widget.RelativeLayout";
     public static final String WIDGET_IMAGEBUTTON = "android.widget.ImageButton";
@@ -78,6 +85,5 @@ public class Strings {
     public static final String WIDGET_TOAST = "android.widget.Toast$TN";
     public static final String WIDGET_VIEW_VIEW = "android.view.View";
     public static final String WIDGET_LINEAR_LAYOUT = "android.widget.LinearLayout";
-
     public static final String VIEW_VIEWGROUP = "android.view.ViewGroup";
 }

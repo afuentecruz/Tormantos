@@ -1,4 +1,4 @@
-package com.alberto.tfg.tormantos.dto;
+package com.alberto.tfg.tormantos.dto.system;
 
 import com.alberto.tfg.tormantos.utils.Helper;
 

@@ -32,6 +32,26 @@ public class GmailAnalyzerImpl implements Analyzer {
         gmailDto = new GmailDto();
     }
 
+    private void setReceivers(EventSto eventSto) {
+        if (eventSto.getEvent().getEventType() == AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED) {
+            String receiver = Helper.getEventText(eventSto.getEvent());
+            if (receiver.endsWith(", ")) {
+                // Extract all the receivers one by one
+                receiver = receiver.replace("<", "");
+                receiver = receiver.replace(">", "");
+                gmailDto.setReceivers(this.formatReceivers(receiver));
+                // Log.d(TAG, receiver);
+            }
+        }
+    }
+
+    private void confirmMailSend(EventSto eventSto) {
+        if (Helper.getEventText(eventSto.getEvent()).equals(Strings.KEY_GMAIL_SENDED)) {
+            gmailDto.setTimestamp(eventSto.getCaptureInstant());
+            storeObjectInRealm();
+        }
+    }
+
     @Override
     public void compute(EventSto eventSto) {
 
@@ -48,33 +68,18 @@ public class GmailAnalyzerImpl implements Analyzer {
                     gmailDto.setSender(Helper.getEventText(eventSto.getEvent()));
                     break;
                 case Strings.WIDGET_AUTOCOMPLETE: //Receivers
-                    if (eventSto.getEvent().getEventType() == AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED) {
-                        String receiver = Helper.getEventText(eventSto.getEvent());
-                        if (receiver.endsWith(", ")) {
-                            // Extract all the receivers one by one
-                            receiver = receiver.replace("<", "");
-                            receiver = receiver.replace(">", "");
-                            gmailDto.setReceivers(this.formatReceivers(receiver));
-                            // Log.d(TAG, receiver);
-                        }
-                    }
+                    setReceivers(eventSto);
 
                     break;
                 case Strings.WIDGET_EDITTEXT: //Mail subject
                     gmailDto.setSubject(Helper.getEventText(eventSto.getEvent()));
-
                     break;
                 case Strings.WIDGET_VIEW_VIEW: //Mail body
                     // Deprecated, not using View_View event anymmore, in fact, the body write doesn't generates any event.
                     gmailDto.setBody(Helper.getEventText(eventSto.getEvent()));
-
                     break;
                 case Strings.WIDGET_TOAST: //Mail finally send
-                    if (Helper.getEventText(eventSto.getEvent()).equals(Strings.KEY_GMAIL_SENDED)) {
-                        gmailDto.setTimestamp(eventSto.getCaptureInstant());
-                        storeObjectInRealm();
-                    }
-
+                   confirmMailSend(eventSto);
                     break;
                 default:
                     break;

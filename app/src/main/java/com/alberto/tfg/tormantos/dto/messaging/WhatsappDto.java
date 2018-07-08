@@ -19,14 +19,16 @@ public class WhatsappDto extends RealmObject {
     @PrimaryKey
     private String id;
 
+    /** Name of the contact who the user is talking to*/
     private String interlocutor;
 
+    /** A list of the messages sent, including the timestamp of the send */
     private RealmList<TimestampString> textList;
 
-    // Describes the start time when the user clicked a conversation
+    /** Describes the timestamp when the user clicked a conversation */
     private Date startTimestamp;
 
-    // Describes the end time when the user abandoned a conversation
+    /** Describes the timestamp when the user abandoned a conversation */
     private Date endTimestamp;
 
     public WhatsappDto() {

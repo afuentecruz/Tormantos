@@ -9,4 +9,9 @@
     <string name="service_name">Tormantos tracking service</string>
     <string name="service_description">Tormantos tracking service only for investigation purpose</string>
     <string name="nav_whatsapp">Whatsapp</string>
+    <string name="tormantos_home">Bienvenido a Tormantos! Una app que te ayudará a determinar tu grado de adicción
+    al teléfono, así como detectar rutinas de comportamiento con el mismo</string>
+    <string name="tormantos_home_desc"> Para empezar, despligua el panel lateral, donde verás un listado de aplicaciones. Haz click sobre la que quieras conocer detalles.</string>
+    <string name="accessibility_permissions_required">Ups! Teneos un problema, para funcionar Tormantos necesita permisos de accesibilidad. Si no sabes como llegar,
+    sígueme!</string>
 </resources>
