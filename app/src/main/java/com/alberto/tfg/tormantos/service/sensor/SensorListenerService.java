@@ -1,4 +1,4 @@
-package com.alberto.tfg.tormantos.service.listener;
+package com.alberto.tfg.tormantos.service.sensor;
 
 import android.app.Service;
 import android.content.Context;
@@ -24,6 +24,8 @@ public class SensorListenerService extends Service {
     private static final float LOCATION_DISTANCE = 10f;
 
 
+
+
     private class LocationListener implements android.location.LocationListener {
         Location lastLocation;
 
@@ -45,16 +47,19 @@ public class SensorListenerService extends Service {
         }
 
         @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) { }
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
 
         @Override
-        public void onProviderEnabled(String provider) { }
+        public void onProviderEnabled(String provider) {
+        }
 
         @Override
-        public void onProviderDisabled(String provider) { }
+        public void onProviderDisabled(String provider) {
+        }
     }
 
-    LocationListener[] mLocationListeners = new LocationListener[]{
+    LocationListener[] locationListeners = new LocationListener[]{
             new LocationListener(LocationManager.GPS_PROVIDER),
             new LocationListener(LocationManager.NETWORK_PROVIDER)
     };
@@ -74,11 +79,13 @@ public class SensorListenerService extends Service {
     @Override
     public void onCreate() {
         Log.e(TAG, "onCreate");
+
         initializeLocationManager();
+
         try {
             locationManager.requestLocationUpdates(
                     LocationManager.NETWORK_PROVIDER, LOCATION_INTERVAL, LOCATION_DISTANCE,
-                    mLocationListeners[1]);
+                    locationListeners[1]);
         } catch (java.lang.SecurityException ex) {
             Log.i(TAG, "fail to request location update, ignore", ex);
         } catch (IllegalArgumentException ex) {
@@ -87,7 +94,7 @@ public class SensorListenerService extends Service {
         try {
             locationManager.requestLocationUpdates(
                     LocationManager.GPS_PROVIDER, LOCATION_INTERVAL, LOCATION_DISTANCE,
-                    mLocationListeners[0]);
+                    locationListeners[0]);
         } catch (java.lang.SecurityException ex) {
             Log.i(TAG, "fail to request location update, ignore", ex);
         } catch (IllegalArgumentException ex) {
@@ -100,9 +107,9 @@ public class SensorListenerService extends Service {
         Log.e(TAG, "onDestroy");
         super.onDestroy();
         if (locationManager != null) {
-            for (int i = 0; i < mLocationListeners.length; i++) {
+            for (int i = 0; i < locationListeners.length; i++) {
                 try {
-                    locationManager.removeUpdates(mLocationListeners[i]);
+                    locationManager.removeUpdates(locationListeners[i]);
                 } catch (Exception ex) {
                     Log.i(TAG, "fail to remove location listners, ignore", ex);
                 }

@@ -20,7 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alberto.tfg.tormantos.R;
-import com.alberto.tfg.tormantos.service.listener.SensorListenerService;
+import com.alberto.tfg.tormantos.service.sensor.SensorListenerService;
 import com.intentfilter.androidpermissions.PermissionManager;
 
 import butterknife.BindView;

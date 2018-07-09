@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.alberto.tfg.tormantos.R;
+import com.alberto.tfg.tormantos.dto.messaging.TelegramDto;
 import com.alberto.tfg.tormantos.dto.messaging.WhatsappDto;
 import com.alberto.tfg.tormantos.dto.system.GeneralAppDto;
 import com.alberto.tfg.tormantos.manager.DBManager;
@@ -22,17 +23,25 @@ import butterknife.ButterKnife;
 
 public class MessagingFragment extends Fragment {
 
+    /**
+     * Whatsapp fields
+     */
     @BindView(R.id.tewtview_whatsapp_totaltime)
     TextView textViewWhatsappTime;
-
     @BindView(R.id.tewtview_whatsapp_distinct)
     TextView textViewWhatsappDistinct;
-
     @BindView(R.id.tewtview_whatsapp_popular)
     TextView textViewWhatsappPopular;
-
     @BindView(R.id.tewtview_whatsapp_total_lines)
     TextView textViewWhatsappTotalLines;
+
+    /**
+     * Telegram fields
+     */
+    @BindView(R.id.tewtview_telegram_totaltime)
+    TextView textViewTelegramTime;
+    @BindView(R.id.tewtview_telegram_total_sent)
+    TextView textViewTelegramTotalSent;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,15 +49,17 @@ public class MessagingFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_messaging, container, false);
         ButterKnife.bind(this, view);
         loadWhatsappData();
+        loadTelegramData();
 
         return view;
     }
 
     private void loadWhatsappData() {
+
         List<WhatsappDto> whatsappDtoList = (List<WhatsappDto>) (List) DBManager.getAllObjects(WhatsappDto.class);
 
         // -- total time spent in whatsapp
-        textViewWhatsappTime.setText(getWhatsappTotalTime());
+        textViewWhatsappTime.setText(getAppTotalTime(Strings.PACKAGE_WHATSAPP));
 
         // -- opened conversations
         Long totalDifferentConversations = RealmQuerys.getWhatsappTotalDifferentConversations();
@@ -68,9 +79,20 @@ public class MessagingFragment extends Fragment {
 
     }
 
-    public String getWhatsappTotalTime() {
+    public void loadTelegramData() {
+
+        List<TelegramDto> telegramDtoList = (List<TelegramDto>) (List) DBManager.getAllObjects(TelegramDto.class);
+
+        // -- total time spent in telegram
+        textViewTelegramTime.setText(getAppTotalTime(Strings.PACKAGE_TELEGRAM));
+
+        // -- total written lines
+        textViewTelegramTotalSent.setText(Integer.toString(telegramDtoList.size()));
+    }
+
+    public String getAppTotalTime(String packageName) {
         long totalTimeOfUse = 0;
-        List<GeneralAppDto> generalAppDtoList = RealmQuerys.getAllGeneralAppByPackage(Strings.PACKAGE_WHATSAPP);
+        List<GeneralAppDto> generalAppDtoList = RealmQuerys.getAllGeneralAppByPackage(packageName);
         for (GeneralAppDto generalAppDto : generalAppDtoList) {
             long useDiff = generalAppDto.getEndTimestamp().getTime() - generalAppDto.getStartTimestamp().getTime();
             totalTimeOfUse = totalTimeOfUse + useDiff;
