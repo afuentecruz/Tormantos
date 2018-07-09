@@ -65,7 +65,7 @@ public class DialAnalyzerImpl implements Analyzer {
             case Strings.WIDGET_IMAGEVIEW: // -- call made from the recent calls
                 if (!"".equals(Helper.getEventText(eventSto.getEvent()))) {
                     dialDto = new DialDto(eventSto.getCaptureInstant());
-                    dialDto.setContact(Helper.getEventText(eventSto.getEvent()));
+                    dialDto.setContact(getContactNameFromRecentContacts(Helper.getEventText(eventSto.getEvent())));
                 }
                 break;
             case Strings.WIDGET_IMAGEBUTTON:

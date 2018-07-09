@@ -21,7 +21,6 @@ import android.widget.Toast;
 
 import com.alberto.tfg.tormantos.R;
 import com.alberto.tfg.tormantos.service.listener.SensorListenerService;
-import com.alberto.tfg.tormantos.utils.Strings;
 import com.intentfilter.androidpermissions.PermissionManager;
 
 import butterknife.BindView;
@@ -107,37 +106,27 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+
         // Handle navigation view item clicks here.
-        DBContentFragment dbContentFragment = new DBContentFragment();
         int id = item.getItemId();
-        if (id == R.id.whatsapp) {
-            // Show the WhatsApp stored content
-            dbContentFragment.setContentDescription(Strings.PACKAGE_WHATSAPP);
-        } else if (id == R.id.gmail) {
-            // Show the GMail stored content
-            dbContentFragment.setContentDescription(Strings.PACKAGE_GMAIL);
+        if (id == R.id.communication) {
+            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.main_content, new CommunicationFragment()).commit();
+        } else if (id == R.id.instant_messaging) {
+            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.main_content, new MessagingFragment()).commit();
 
-        } else if (id == R.id.sms) {
-            // Show the Sms stored content
-            dbContentFragment.setContentDescription(Strings.PACKAGE_SMS);
-
-        } else if (id == R.id.firefox) {
-            // Show the firefox stored content
-            dbContentFragment.setContentDescription(Strings.PACKAGE_FIREFOX);
-        } else if (id == R.id.chrome) {
-            // Show the chrome content
-            dbContentFragment.setContentDescription(Strings.PACKAGE_CHROME);
-        } else if (id == R.id.notifications) {
+        } else if (id == R.id.browsers) {
+            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.main_content, new BrowsersFragment()).commit();
+        } else if (id == R.id.system) {
             // Show the notifications related stored content
-            dbContentFragment.setContentDescription(Strings.CLASS_NOTIFICATION);
-        } else if (id == R.id.location) {
-            // Show the location related stored content
-            dbContentFragment.setContentDescription(Strings.SERVICE_LOCATION);
-
+            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.main_content, new SystemFragment()).commit();
         }
 
-        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.main_content, dbContentFragment, DBContentFragment.TAG).commit();
+        // android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        // fragmentTransaction.add(R.id.main_content, dbContentFragment, DBContentFragment.TAG).commit();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -213,11 +202,11 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        if(isAccessibilitySettingsOn(context)){
-            this.textViewAccess.setVisibility(View.INVISIBLE);
-            this.launchAccessibilitySettingsButton.setVisibility(View.INVISIBLE);
+        if (isAccessibilitySettingsOn(context)) {
+            this.textViewAccess.setVisibility(View.GONE);
+            this.launchAccessibilitySettingsButton.setVisibility(View.GONE);
             Log.d(TAG, "Accessibility service is enabled");
-        }else{
+        } else {
             this.textViewAccess.setVisibility(View.VISIBLE);
             this.launchAccessibilitySettingsButton.setVisibility(View.VISIBLE);
             Log.d(TAG, "Accessibility service is DISABLED");

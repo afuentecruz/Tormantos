@@ -8,7 +8,7 @@
     <string name="action_settings">Settings</string>
     <string name="service_name">Tormantos tracking service</string>
     <string name="service_description">Tormantos tracking service only for investigation purpose</string>
-    <string name="nav_whatsapp">Whatsapp</string>
+    <string name="nav_instant_messaging">Mensajería instantánea</string>
     <string name="tormantos_home">Bienvenido a Tormantos! Una app que te ayudará a determinar tu grado de adicción
     al teléfono, así como detectar rutinas de comportamiento con el mismo</string>
     <string name="tormantos_home_desc"> Para empezar, despligua el panel lateral, donde verás un listado de aplicaciones. Haz click sobre la que quieras conocer detalles.</string>

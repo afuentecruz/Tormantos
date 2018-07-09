@@ -5,42 +5,32 @@
 
     <item android:title="Apps de comunicación">
         <menu>
-        <item
-            android:id="@+id/gmail"
-            android:title="Gmail" />
-        <item
-            android:id="@+id/sms"
-            android:title="Sms" />
+            <item
+                android:id="@+id/communication"
+                android:title="Comunicación" />
         </menu>
     </item>
 
-    <item android:title="Messaging">
+    <item android:title="Mensajeria">
         <menu>
             <item
-                android:id="@+id/whatsapp"
-                android:title="@string/nav_whatsapp" />
+                android:id="@+id/instant_messaging"
+                android:title="@string/nav_instant_messaging" />
         </menu>
     </item>
-    <item android:title="Browsing">
+    <item android:title="Navegación web">
         <menu>
             <item
-                android:id="@+id/firefox"
-                android:title="Firefox" />
-
-            <item
-                android:id="@+id/chrome"
-                android:title="Chrome" />
+                android:id="@+id/browsers"
+                android:title="Navegadores" />
         </menu>
     </item>
 
-    <item android:title="System">
+    <item android:title="Información generada por el sistema">
         <menu>
             <item
-                android:id="@+id/notifications"
-                android:title="Notifications"/>
-
-            <item android:id="@+id/location"
-                android:title="Locations" />
+                android:id="@+id/system"
+                android:title="Sistema" />
         </menu>
     </item>
 
