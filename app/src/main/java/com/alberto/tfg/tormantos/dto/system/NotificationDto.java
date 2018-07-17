@@ -17,10 +17,13 @@ public class NotificationDto extends RealmObject{
     @PrimaryKey
     private String id;
 
+    /** The source package of the app that generated the notification */
     private String sourcePackage;
 
+    /** The notification text content */
     private String notificationContent;
 
+    /** Timestamp when the notification was launched */
     private Date timestamp;
 
     public NotificationDto() {

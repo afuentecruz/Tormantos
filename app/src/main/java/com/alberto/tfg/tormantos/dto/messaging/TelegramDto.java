@@ -13,14 +13,10 @@ public class TelegramDto extends RealmObject {
     @PrimaryKey
     private String id;
 
-    /**
-     * The sended message
-     */
+    /** The sended message */
     private String message;
 
-    /**
-     * Instant when the message was sent
-     */
+    /** Instant when the message was sent */
     private Date timestamp;
 
     public TelegramDto() {

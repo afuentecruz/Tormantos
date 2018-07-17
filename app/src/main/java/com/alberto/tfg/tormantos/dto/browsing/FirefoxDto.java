@@ -17,8 +17,10 @@ public class FirefoxDto extends RealmObject {
     @PrimaryKey
     private String id;
 
+    /** String containing the visited urls or search terms */
     private String searchUrl;
 
+    /** Timestamp when the search happened */
     private Date timestamp;
 
     public FirefoxDto() {

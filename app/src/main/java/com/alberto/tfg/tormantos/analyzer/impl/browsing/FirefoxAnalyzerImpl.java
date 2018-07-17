@@ -1,8 +1,5 @@
 package com.alberto.tfg.tormantos.analyzer.impl.browsing;
 
-import android.content.Context;
-import android.widget.Toast;
-
 import com.alberto.tfg.tormantos.analyzer.Analyzer;
 import com.alberto.tfg.tormantos.dto.browsing.FirefoxDto;
 import com.alberto.tfg.tormantos.manager.DBManager;
@@ -19,14 +16,12 @@ public class FirefoxAnalyzerImpl implements Analyzer {
 
     private static final String TAG = "FirefoxAnalyzer";
 
-    private Context context;
-
     private FirefoxDto firefoxDto;
 
     private boolean confirmInput = false;
 
-    public FirefoxAnalyzerImpl(Context context) {
-        this.context = context;
+    public FirefoxAnalyzerImpl() {
+
     }
 
     @Override
@@ -70,8 +65,6 @@ public class FirefoxAnalyzerImpl implements Analyzer {
                 firefoxDto.getTimestamp() != null) {
 
             DBManager.saveOrUpdate(this.firefoxDto);
-            Toast.makeText(context, "Stored firefox:\n" + this.firefoxDto.toString(), Toast.LENGTH_LONG).show();
-
         }
     }
 

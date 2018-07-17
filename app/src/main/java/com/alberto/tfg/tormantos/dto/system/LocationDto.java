@@ -16,20 +16,14 @@ public class LocationDto extends RealmObject {
     @PrimaryKey
     private String id;
 
-    /**
-     * The location latitude value
-     */
-    Double latitude;
+    /** The location latitude value */
+    private Double latitude;
 
-    /**
-     * The location longitude value
-     */
-    Double longitude;
+    /** The location longitude value */
+    private Double longitude;
 
-    /**
-     * Timestamp when the location has captured
-     */
-    Date timestamp;
+    /** Timestamp when the location has captured */
+    private Date timestamp;
 
     public LocationDto() {
         this.id = UUID.randomUUID().toString(); //Randomized id.

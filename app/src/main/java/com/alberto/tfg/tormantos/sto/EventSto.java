@@ -12,16 +12,16 @@ import java.util.Date;
 public class EventSto {
 
     /** Capture timestamp */
-    Date captureInstant;
+    private Date captureInstant;
 
     /** Event package name */
-    String packageName;
+    private String packageName;
 
     /** Event className */
-    String className;
+    private String className;
 
     /** The event */
-    AccessibilityEvent event;
+    private AccessibilityEvent event;
 
     public EventSto(){
     }

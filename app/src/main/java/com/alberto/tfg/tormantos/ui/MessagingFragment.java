@@ -54,6 +54,13 @@ public class MessagingFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadWhatsappData();
+        loadTelegramData();
+    }
+
     private void loadWhatsappData() {
 
         List<WhatsappDto> whatsappDtoList = (List<WhatsappDto>) (List) DBManager.getAllObjects(WhatsappDto.class);

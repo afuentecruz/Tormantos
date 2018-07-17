@@ -24,8 +24,6 @@ public class SensorListenerService extends Service {
     private static final float LOCATION_DISTANCE = 10f;
 
 
-
-
     private class LocationListener implements android.location.LocationListener {
         Location lastLocation;
 

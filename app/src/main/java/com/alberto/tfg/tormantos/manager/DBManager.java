@@ -31,10 +31,25 @@ public class DBManager {
         Realm realm = Realm.getDefaultInstance();
 
         realm.beginTransaction();
-        //Find all the chrome models
+        //Find all the objectClass models
         realmObjectList = realm.where(objectClass).findAll();
         realm.commitTransaction();
 
         return realmObjectList;
+    }
+
+    /**
+     * Deletes all the object of class
+     *
+     * @param objectClass The object class to delete
+     */
+    public static void deleteAllObjects(Class objectClass) {
+        List<RealmObject> realmObjectList;
+        Realm realm = Realm.getDefaultInstance();
+
+        realm.beginTransaction();
+        //Delete all objectClass models
+        realm.delete(objectClass);
+        realm.commitTransaction();
     }
 }

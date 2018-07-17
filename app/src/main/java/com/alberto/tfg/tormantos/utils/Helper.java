@@ -18,11 +18,21 @@ public class Helper {
 
     private static final String KEY_DATE_PATTERN = "dd/MM/YYYY HH:mm:ss";
 
+    /**
+     * Generates a string from a Date with the pattern KEY_DATE_PATTERN
+     * @param date the Date
+     * @return String with the formatted date value
+     */
     public static String formatDate(Date date){
         SimpleDateFormat sdf = new SimpleDateFormat(KEY_DATE_PATTERN);
         return sdf.format(date).toString();
     }
 
+    /**
+     * Extracts the text contained in an Accessibility event
+     * @param event The accessibility evet
+     * @return String with the event text
+     */
     public static String getEventText(AccessibilityEvent event) {
         StringBuilder sb = new StringBuilder();
         for (CharSequence s : event.getText()) {
@@ -31,6 +41,10 @@ public class Helper {
         return sb.toString();
     }
 
+    /**
+     * Logs an accessibility event contained in an eventSto.
+     * @param event The eventSto
+     */
     public static void log(EventSto event){
 
         SimpleDateFormat sdf = new SimpleDateFormat(KEY_DATE_PATTERN);
@@ -44,6 +58,11 @@ public class Helper {
         }
     }
 
+    /**
+     * Returns the type of the event as string
+     * @param event The Accessibility Event
+     * @return String with the event type value
+     */
     public static String getEventType(AccessibilityEvent event) {
         switch (event.getEventType()) {
             case AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED:

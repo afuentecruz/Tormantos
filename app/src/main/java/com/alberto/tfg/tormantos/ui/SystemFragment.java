@@ -36,6 +36,12 @@ public class SystemFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadNotificationsData();
+    }
+
     private void loadNotificationsData() {
 
         List<NotificationDto> notificationDtoList = (List<NotificationDto>) (List) DBManager.getAllObjects(NotificationDto.class);

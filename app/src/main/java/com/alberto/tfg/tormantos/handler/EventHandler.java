@@ -76,21 +76,21 @@ public class EventHandler {
         currentPackage = "";
 
         // -- communication analyzers
-        dialAnalyzer = new DialAnalyzerImpl(context);
-        gmailAnalyzer = new GmailAnalyzerImpl(context);
-        smsAnalyzer = new SmsAnalyzerImpl(context);
+        dialAnalyzer = new DialAnalyzerImpl();
+        gmailAnalyzer = new GmailAnalyzerImpl();
+        smsAnalyzer = new SmsAnalyzerImpl();
 
         // -- instant messaging analyzers
-        whatsappAnalyzer = new WhatsappAnalyzerImpl(context);
-        telegramAnalyzer = new TelegramAnalyzerImpl(context);
+        whatsappAnalyzer = new WhatsappAnalyzerImpl();
+        telegramAnalyzer = new TelegramAnalyzerImpl();
 
         // -- Browsing analyzers
-        firefoxAnalyzer = new FirefoxAnalyzerImpl(context);
-        chromeAnalyzer = new ChromeAnalyzerImpl(context);
+        firefoxAnalyzer = new FirefoxAnalyzerImpl();
+        chromeAnalyzer = new ChromeAnalyzerImpl();
 
         // -- System analyzers
-        notificationAnalyzer = new NotificationAnalyzerImpl(context);
-        generalAppAnalyzer = new GeneralAppAnalyzerImpl(context);
+        notificationAnalyzer = new NotificationAnalyzerImpl();
+        generalAppAnalyzer = new GeneralAppAnalyzerImpl();
     }
 
     /**
@@ -115,6 +115,11 @@ public class EventHandler {
 
     }
 
+    /**
+     * Handles an accessibility event for call to the corresponding analyzer implementation
+     * @param event The accessibility event
+     * @param timestamp Timestamp when was produced
+     */
     public void handleEvent(AccessibilityEvent event, Date timestamp) {
 
         EventSto eventSto = new EventSto(event, timestamp,
@@ -258,25 +263,6 @@ public class EventHandler {
                 break;
         }
     }
-
-//    /**
-//     * Checks if the app changed suddenly (for example, navigated to home from any other activity)
-//     * and try to store any previous content of the corresponding analyzer.
-//     *
-//     * @param eventSto the EventSto.
-//     */
-//    private void commitAnalyzerData(EventSto eventSto) {
-//        if (!eventSto.getPackageName().equals(Strings.PACKAGE_KEYBOARD)
-//                && !eventSto.getPackageName().equals(this.currentPackage)) {
-//            switch (this.currentPackage) {
-//                case Strings.PACKAGE_WHATSAPP:
-//                    whatsappAnalyzer.checkRemainingData(eventSto);
-//                    break;
-//                default:
-//                    break;
-//            }
-//        }
-//    }
 
     /**
      * Checks the notification content in order to extract any

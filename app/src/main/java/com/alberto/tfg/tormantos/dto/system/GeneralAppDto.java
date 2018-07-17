@@ -18,19 +18,13 @@ public class GeneralAppDto extends RealmObject {
     @PrimaryKey
     private String id;
 
-    /**
-     * The moment when the user started the app use
-     */
+    /** The moment when the user started the app use */
     private Date startTimestamp;
 
-    /**
-     * The moment when the user ended the app use
-     */
+    /** The moment when the user ended the app use */
     private Date endTimestamp;
 
-    /**
-     * The packagename of the used app
-     */
+    /** The packagename of the used app */
     private String packageName;
 
     public GeneralAppDto() {

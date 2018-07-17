@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:name=".CustomApp"
@@ -37,7 +38,14 @@
                 android:resource="@xml/accessibilityservice" />
         </service>
         <service android:name=".service.sensor.SensorListenerService" android:process=":gpsService" />
-
+        <receiver android:name=".manager.AlarmReceiver"/>
+      <!--  <receiver
+            android:name="com.taxeeta.support.OnAlarmReceiver"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.NOTIFY" />
+            </intent-filter>
+        </receiver>-->
     </application>
 
 </manifest>

@@ -70,6 +70,20 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public void onResume(){
+        super.onResume();
+        if (isAccessibilitySettingsOn(this.getApplicationContext())) {
+            this.textViewAccess.setVisibility(View.GONE);
+            this.launchAccessibilitySettingsButton.setVisibility(View.GONE);
+            Log.d(TAG, "Accessibility service is enabled");
+        } else {
+            this.textViewAccess.setVisibility(View.VISIBLE);
+            this.launchAccessibilitySettingsButton.setVisibility(View.VISIBLE);
+            Log.d(TAG, "Accessibility service is DISABLED");
+        }
+    }
+
+    @Override
     public void onBackPressed() {
 
         if (drawer.isDrawerOpen(GravityCompat.START)) {

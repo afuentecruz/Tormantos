@@ -66,6 +66,15 @@ public class CommunicationFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadDialData();
+        loadSmsData();
+        loadGmailData();
+
+    }
+
     private void loadDialData() {
 
         List<DialDto> dialDtoList = (List<DialDto>) (List) DBManager.getAllObjects(DialDto.class);
@@ -188,8 +197,10 @@ public class CommunicationFragment extends Fragment {
                 temp = gmailDtoList.get(i);
                 tempCount = 0;
                 for (int j = 1; j < gmailDtoList.size(); j++) {
-                    if (temp.getReceivers().get(0).equals(gmailDtoList.get(j).getReceivers().get(0)))
-                        tempCount++;
+                    if (!gmailDtoList.get(j).getReceivers().isEmpty()) {
+                        if (temp.getReceivers().get(0).equals(gmailDtoList.get(j).getReceivers().get(0)))
+                            tempCount++;
+                    }
                 }
                 if (tempCount > count) {
                     popular = temp;

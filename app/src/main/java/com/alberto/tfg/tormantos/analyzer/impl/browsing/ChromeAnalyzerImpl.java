@@ -1,9 +1,6 @@
 package com.alberto.tfg.tormantos.analyzer.impl.browsing;
 
-import android.content.Context;
-import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
-import android.widget.Toast;
 
 import com.alberto.tfg.tormantos.analyzer.Analyzer;
 import com.alberto.tfg.tormantos.dto.browsing.ChromeDto;
@@ -16,19 +13,15 @@ import java.util.Date;
 
 public class ChromeAnalyzerImpl implements Analyzer {
 
-    private Context context;
-
     private ChromeDto chromeDto;
 
     private String previousSearch = "";
 
 
-    public ChromeAnalyzerImpl(Context context) {
-        this.context = context;
-    }
+    public ChromeAnalyzerImpl() {}
 
     public void confirmKeyboardInput(Date timestamp) {
-        if(this.chromeDto != null){
+        if (this.chromeDto != null) {
             chromeDto.setTimestamp(timestamp);
             storeObjectInRealm();
         }
@@ -61,7 +54,6 @@ public class ChromeAnalyzerImpl implements Analyzer {
             for (int i = 0; i < eventText.length(); i++) {
                 if (Character.isUpperCase(eventText.charAt(i))) {
                     promptedUrl = eventText.substring(0, i);
-                    Log.d("CULO", "CAPTURA" + promptedUrl);
                     break;
                 }
             }
@@ -99,8 +91,6 @@ public class ChromeAnalyzerImpl implements Analyzer {
         if ((chromeDto != null) && (!"".equals(chromeDto.getSearchUrl()))) {
             if (!previousSearch.equals(chromeDto.getSearchUrl())) {
                 DBManager.saveOrUpdate(this.chromeDto);
-                Toast.makeText(context, "Stored chrome:\n" + this.chromeDto.toString(), Toast.LENGTH_LONG).show();
-
                 previousSearch = chromeDto.getSearchUrl();
             }
         }

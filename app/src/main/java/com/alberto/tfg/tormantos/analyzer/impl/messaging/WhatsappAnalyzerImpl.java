@@ -1,8 +1,5 @@
 package com.alberto.tfg.tormantos.analyzer.impl.messaging;
 
-import android.content.Context;
-import android.widget.Toast;
-
 import com.alberto.tfg.tormantos.analyzer.Analyzer;
 import com.alberto.tfg.tormantos.dto.common.TimestampString;
 import com.alberto.tfg.tormantos.dto.messaging.WhatsappDto;
@@ -19,7 +16,6 @@ import java.util.Date;
 public class WhatsappAnalyzerImpl implements Analyzer {
 
     private static final String TAG = "WhatsappAnalyzer";
-    private Context context;
     /**
      * The message that the user is writting
      */
@@ -34,8 +30,7 @@ public class WhatsappAnalyzerImpl implements Analyzer {
     private WhatsappDto whatsappDto;
 
 
-    public WhatsappAnalyzerImpl(Context context) {
-        this.context = context;
+    public WhatsappAnalyzerImpl() {
         whatsappDto = null;
     }
 
@@ -151,8 +146,6 @@ public class WhatsappAnalyzerImpl implements Analyzer {
         if (this.whatsappDto != null && this.whatsappDto.getInterlocutor() != null
                 && this.currentMessage != null) {
             DBManager.saveOrUpdate(this.whatsappDto);
-            Toast.makeText(context, "Stored whatsapp:\n" + this.whatsappDto.toString(), Toast.LENGTH_LONG).show();
-
         }
     }
 }

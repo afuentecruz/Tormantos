@@ -1,7 +1,6 @@
 package com.alberto.tfg.tormantos.analyzer.impl.messaging;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import com.alberto.tfg.tormantos.analyzer.Analyzer;
 import com.alberto.tfg.tormantos.dto.messaging.TelegramDto;
@@ -25,8 +24,7 @@ public class TelegramAnalyzerImpl implements Analyzer {
 
     private String currentMessage;
 
-    public TelegramAnalyzerImpl(Context context) {
-        this.context = context;
+    public TelegramAnalyzerImpl() {
     }
 
     /**
@@ -61,7 +59,6 @@ public class TelegramAnalyzerImpl implements Analyzer {
     @Override
     public void storeObjectInRealm() {
         DBManager.saveOrUpdate(this.telegramDto);
-        Toast.makeText(context, "Stored telegram:\n" + this.telegramDto.toString(), Toast.LENGTH_LONG).show();
         this.currentMessage = null;
     }
 }

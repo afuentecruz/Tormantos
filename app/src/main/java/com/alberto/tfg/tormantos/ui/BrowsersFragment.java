@@ -52,6 +52,13 @@ public class BrowsersFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadChromeData();
+        loadFirefoxData();
+    }
+
     public void loadChromeData() {
 
         List<ChromeDto> chromeDtoList = (List<ChromeDto>) (List) DBManager.getAllObjects(ChromeDto.class);

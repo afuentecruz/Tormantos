@@ -1,8 +1,5 @@
 package com.alberto.tfg.tormantos.analyzer.impl.communication;
 
-import android.content.Context;
-import android.widget.Toast;
-
 import com.alberto.tfg.tormantos.analyzer.Analyzer;
 import com.alberto.tfg.tormantos.dto.comunication.DialDto;
 import com.alberto.tfg.tormantos.manager.DBManager;
@@ -15,12 +12,10 @@ import com.alberto.tfg.tormantos.utils.Strings;
  */
 public class DialAnalyzerImpl implements Analyzer {
 
-    private Context context;
-
     private DialDto dialDto;
 
-    public DialAnalyzerImpl(Context context) {
-        this.context = context;
+    public DialAnalyzerImpl() {
+
     }
 
     private String getContactNameFromQuickContacts(String eventText) {
@@ -85,6 +80,5 @@ public class DialAnalyzerImpl implements Analyzer {
     @Override
     public void storeObjectInRealm() {
         DBManager.saveOrUpdate(this.dialDto);
-        Toast.makeText(context, "Stored dial:\n" + this.dialDto.toString(), Toast.LENGTH_LONG).show();
     }
 }

@@ -14,6 +14,7 @@ import io.realm.annotations.PrimaryKey;
  */
 public class ChromeDto extends RealmObject {
 
+
     @PrimaryKey
     private String id;
 

@@ -1,8 +1,6 @@
 package com.alberto.tfg.tormantos.analyzer.impl.communication;
 
-import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.alberto.tfg.tormantos.analyzer.Analyzer;
 import com.alberto.tfg.tormantos.dto.comunication.SmsDto;
@@ -17,7 +15,6 @@ import com.alberto.tfg.tormantos.utils.Strings;
 public class SmsAnalyzerImpl implements Analyzer {
 
     private static final String TAG = "SmsAnalyzer";
-    private Context context;
     /**
      * SmsDto object that stores the user information
      */
@@ -28,8 +25,8 @@ public class SmsAnalyzerImpl implements Analyzer {
      */
     private String currentContactName = "";
 
-    public SmsAnalyzerImpl(Context context) {
-        this.context = context;
+    public SmsAnalyzerImpl() {
+
     }
 
     @Override
@@ -40,7 +37,6 @@ public class SmsAnalyzerImpl implements Analyzer {
         switch (eventSto.getClassName()) {
             case Strings.CLASS_SMS_CONVERSATION:
 
-                Log.d(TAG, "empezada conversación de sms");
                 this.smsDto = new SmsDto();
                 break;
             case Strings.WIDGET_AUTOCOMPLETE:
@@ -94,6 +90,5 @@ public class SmsAnalyzerImpl implements Analyzer {
 
         }
         DBManager.saveOrUpdate(this.smsDto);
-        Toast.makeText(context, "Stored sms:\n" + this.smsDto.toString(), Toast.LENGTH_LONG).show();
     }
 }

@@ -1,9 +1,7 @@
 package com.alberto.tfg.tormantos.analyzer.impl.communication;
 
-import android.content.Context;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
-import android.widget.Toast;
 
 import com.alberto.tfg.tormantos.analyzer.Analyzer;
 import com.alberto.tfg.tormantos.dto.comunication.GmailDto;
@@ -20,15 +18,13 @@ import io.realm.RealmList;
 public class GmailAnalyzerImpl implements Analyzer {
 
     private static final String TAG = "GmailAnalyzer";
-    private Context context;
 
     /**
      * GmailDto object that stores the user information
      */
     private GmailDto gmailDto;
 
-    public GmailAnalyzerImpl(Context context) {
-        this.context = context;
+    public GmailAnalyzerImpl() {
         gmailDto = new GmailDto();
     }
 
@@ -40,7 +36,6 @@ public class GmailAnalyzerImpl implements Analyzer {
                 receiver = receiver.replace("<", "");
                 receiver = receiver.replace(">", "");
                 gmailDto.setReceivers(this.formatReceivers(receiver));
-                // Log.d(TAG, receiver);
             }
         }
     }
@@ -110,8 +105,6 @@ public class GmailAnalyzerImpl implements Analyzer {
     public void storeObjectInRealm() {
         if (this.gmailDto != null) {
             DBManager.saveOrUpdate(this.gmailDto);
-            Toast.makeText(context, "Stored gmail:\n" + this.gmailDto.toString(), Toast.LENGTH_LONG).show();
-
         }
     }
 }
